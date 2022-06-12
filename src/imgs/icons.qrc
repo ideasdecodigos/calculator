@@ -1,0 +1,28 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>about.png</file>
+    <file>binary.png</file>
+    <file>cancel.png</file>
+    <file>comma.png</file>
+    <file>delete.png</file>
+    <file>exit.png</file>
+    <file>faqs.png</file>
+    <file>history.png</file>
+    <file>length.png</file>
+    <file>microOff.png</file>
+    <file>microOn.png</file>
+    <file>off.png</file>
+    <file>refresh.png</file>
+    <file>scientific.png</file>
+    <file>standard.png</file>
+    <file>temp.png</file>
+    <file>time.png</file>
+    <file>tool.png</file>
+    <file>trash.png</file>
+    <file>undo.png</file>
+    <file>valumeOff.png</file>
+    <file>volumeOn.png</file>
+    <file>warning.png</file>
+    <file>www.png</file>
+  </qresource>
+</RCC>

@@ -1,6 +1,5 @@
 
 from PySide6.QtWidgets import QMainWindow, QMessageBox
-from model.modules2 import Modules
 from views.time import Ui_Time
 from model import length, standard, temperature, properties
 from PySide6.QtGui import QIcon

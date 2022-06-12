@@ -5,9 +5,8 @@ from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QMainWindow, QMessageBox
 from views.temperature import Ui_Temperature
 from model import time, length,  properties, standard
-from model.modules2 import Modules
 
-class Temperature(QMainWindow, Modules):    
+class Temperature(QMainWindow):    
     def __init__(self):
         super(Temperature,self).__init__()
         self.ui = Ui_Temperature()
@@ -28,7 +27,7 @@ class Temperature(QMainWindow, Modules):
         self.ui.btn8.clicked.connect(lambda:self.getBtnText(self.ui.btn8))
         self.ui.btn9.clicked.connect(lambda:self.getBtnText(self.ui.btn9))
         self.ui.btn0.clicked.connect(lambda:self.getBtnText(self.ui.btn0))
-        self.ui.btn_dot.clicked.connect(lambda:Modules.setDot(self.ui.label_text))
+        self.ui.btn_dot.clicked.connect(lambda:self.setDot(self.ui.label_text))
         self.ui.btn_del_one.clicked.connect(self.deleteOne)
         self.ui.btn_clear.clicked.connect(self.deleteAll)
         self.ui.comboBox1.currentIndexChanged.connect(self.calculate)
@@ -134,36 +133,54 @@ class Temperature(QMainWindow, Modules):
             
             temp = 1.8 * val + 32
             temp = round(temp, 4)
-            self.ui.label_result.setText(Modules.delDecimal(temp))
+            self.ui.label_result.setText(self.delDecimal(temp))
             
             #K = °C + 273°
         elif ((firstTemp == 'Celsius') and (secondTemp == 'Kelvin')):
             temp = val + 273.15
             temp = round(temp, 4)
-            self.ui.label_result.setText(Modules.delDecimal(temp))
+            self.ui.label_result.setText(self.delDecimal(temp))
             
             #K = 5/9 (ºF – 32) + 273.15
         elif ((firstTemp == 'Fahrenheit') and (secondTemp == 'Kelvin')):
             temp = 5/9 * (val - 32) + 273.15
             temp = round(temp, 4)
-            self.ui.label_result.setText(Modules.delDecimal(temp))
+            self.ui.label_result.setText(self.delDecimal(temp))
             
             #°C =5/9(°F-32°)
         elif ((firstTemp == 'Fahrenheit') and (secondTemp == 'Celsius')):
             temp = 5/9 * (val - 32)
             temp = round(temp, 4)
-            self.ui.label_result.setText(Modules.delDecimal(temp))         
+            self.ui.label_result.setText(self.delDecimal(temp))         
             
             #°C = K - 273°
         elif ((firstTemp == 'Kelvin') and (secondTemp == 'Celsius')):
             temp = val - 273.15
             temp = round(temp, 4)
-            self.ui.label_result.setText(Modules.delDecimal(temp))
+            self.ui.label_result.setText(self.delDecimal(temp))
             
             #ºF = 1.8(K – 273.15) + 32.
         elif ((firstTemp == 'Kelvin') and (secondTemp == 'Fahrenheit')):
             temp = 1.8 * (val - 273.15) + 32
             temp = round(temp, 4)
-            self.ui.label_result.setText(Modules.delDecimal(temp))
+            self.ui.label_result.setText(self.delDecimal(temp))
             
-    
+            
+    def delDecimal(self, numFloat):
+        """
+        Delete Decimals equal to '.0' and return an integer number
+        for example:
+        >>> delDecimal(489.000)
+        489
+        
+        If module is mayor than '.00' or '.0' then it will return a float number
+        >>> delDecimal(590.902)
+        590.902
+        
+        """
+        txt = str(numFloat)
+        if txt.endswith('.0'):
+            lessOne = len(txt)
+            lessOne -= 2
+            txt = txt[:lessOne] 
+        return txt

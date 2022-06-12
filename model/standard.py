@@ -1,8 +1,11 @@
 from math import *
+import pyttsx3
 from PySide6.QtGui import QIcon
-from PySide6.QtWidgets import QMainWindow, QMessageBox
+from PySide6.QtWidgets import QMainWindow, QMessageBox, QToolBar, QWidget
 from views.standard import Ui_Standard
-from model import temperature, time, length, properties
+from model import temperature, time, length, properties, scientific
+from configparser import ConfigParser
+from pathlib import Path
 
 
 class Standard(QMainWindow):    
@@ -10,13 +13,7 @@ class Standard(QMainWindow):
         super(Standard,self).__init__()
         self.ui = Ui_Standard()
         self.ui.setupUi(self)
-        self.setWindowIcon(QIcon("src/imgs/standard.png"))
-        self.ui.btn_del_historial.setIcon(QIcon("src/imgs/trash.png"))
-        self.ui.btn_show.setIcon(QIcon("src/imgs/history.png"))
-        self.ui.btn_del_one.setIcon(QIcon("src/imgs/delete.png"))
-        # self.ui.label_mr.wordWrap= True
-        # self.ui.label_result.wordWrap= True
-        # self.ui.label_result.setMaximumWidth(400)
+        # self.setWindowIcon(QIcon("src/imgs/standard.png"))
         
         
         
@@ -34,14 +31,14 @@ class Standard(QMainWindow):
         self.ui.btn9.clicked.connect(lambda:self.getBtnText(self.ui.btn9))
         self.ui.btn0.clicked.connect(lambda:self.getBtnText(self.ui.btn0))
         self.ui.btn_e.clicked.connect(self.setE)
-        self.ui.btn_rightp.clicked.connect(self.setRightParenthesis)
+        self.ui.btn_parenthesis.clicked.connect(self.setRightParenthesis)
         self.ui.btn_plus.clicked.connect(lambda:self.getBtnText(self.ui.btn_plus))
         self.ui.btn_minus.clicked.connect(lambda:self.getBtnText(self.ui.btn_minus))
         self.ui.btn_mult.clicked.connect(lambda:self.getBtnText(self.ui.btn_mult))
         self.ui.btn_divide.clicked.connect(lambda:self.getBtnText(self.ui.btn_divide))
         self.ui.btn_percent.clicked.connect(self.setPercent)
         self.ui.btn_dot.clicked.connect(self.setDot)
-        self.ui.btn_del_one.clicked.connect(self.delOne)
+        self.ui.btn_back.clicked.connect(self.delOne)
         self.ui.btn_equal.clicked.connect(self.equals)
         self.ui.btn_clear.clicked.connect(self.clearC)
         self.ui.btn_inverse.clicked.connect(self.inverseInput)
@@ -52,9 +49,11 @@ class Standard(QMainWindow):
         self.ui.actionLenght.triggered.connect(self.open_length)
         self.ui.actionTime.triggered.connect(self.open_time)
         self.ui.actionTemperature.triggered.connect(self.open_temperature)
-        self.ui.btn_show.clicked.connect(self.showHideHistorial)
+        self.ui.actionScientific.triggered.connect(self.open_scientific)
+        self.ui.btn_sh_history.clicked.connect(self.showHideHistorial)
         self.ui.btn_del_historial.clicked.connect(self.ui.list_memory.clear)
         self.ui.btn_sqrt.clicked.connect(self.setSqrt)
+        self.ui.actionPlay_Result.triggered.connect(self.talkAloud)
         
         #Globals variables
         self.input= ''
@@ -65,8 +64,10 @@ class Standard(QMainWindow):
         self.temperature = None
         self.time = None
         self.length = None
+        self.scientific = None
         self.properties = properties.Properties()
-        
+    
+    
     #****Open window functions
     def open_properties(self):
         if self.properties.isVisible():           
@@ -78,6 +79,14 @@ class Standard(QMainWindow):
         if self.temperature is None:
             self.temperature = temperature.Temperature()
             self.temperature.show()
+            self.close()
+        else:
+            self.temperature.close()
+        
+    def open_scientific(self):
+        if self.scientific is None:
+            self.scientific = scientific.Scientific()
+            self.scientific.show()
             self.close()
         else:
             self.temperature.close()
@@ -101,10 +110,8 @@ class Standard(QMainWindow):
     def about(self):
         QMessageBox.information(self,'Info','This is a collaction of calculators v1.0.0\nDeveloped by IDCSchools \n \napr 01, 2022')
 
-    
 
-    #Control functions    
-        
+    #Control functions      
     def getBtnText(self, btn):
         """
         Get the buttons input and display it in the self.ui.label_mr
@@ -232,7 +239,9 @@ class Standard(QMainWindow):
         if txt == '0':
             self.ui.label_mr.clear()
             
-        if txt[-1:] in self.operatorsList or txt() == '':
+        if txt == '0':
+            self.ui.label_mr.setText('e')
+        elif txt[-1:] in self.operatorsList:
             self.ui.label_mr.setText(txt + 'e')
         else:
             self.ui.label_mr.setText(txt + '*(e')
@@ -323,6 +332,8 @@ class Standard(QMainWindow):
             
         txt = txt.replace('%', '/percent*')
         txt = txt.replace('√', 'sqrt')            
+        txt = txt.replace('**', '^')            
+        txt = txt.replace('^', 'pow')             
             
         return txt
         
@@ -365,4 +376,53 @@ class Standard(QMainWindow):
         if self.input != '' and '.' not in self.input:
             self.input += '.'
             self.ui.label_mr.setText(self.ui.label_mr.text() + '.')
+    
+    #speak aloud code
+    def talkAloud(self):
+        self.init_speaker()#init the voice and the rate      
+        # self.ui.statusBar.showMessage(self.play_es())        
+        speaker = pyttsx3.init()  
+        voces = speaker.getProperty('voices')
+        speaker.setProperty('voice',voces[self.lang].id) 
+        speaker.setProperty('rate',self.rate)
+        
+        speaker.say(self.play_es())   
+        speaker.runAndWait() 
+        
+    def play_es(self):
+        rst = self.ui.label_result.text()
+        txt = self.ui.label_mr.text()
+        
+        txt = txt.replace('-',' menos ')
+        txt = txt.replace('+',' + ')
+        txt = txt.replace('*',' por ')
+        txt = txt.replace('√',' raíz de ')
+        txt = txt.replace('%',' porciento de ')
+        txt = txt.replace('/',' entre ')
+            
+        if txt == '0' and rst == '':
+            txt = '0'
+        elif rst != '' and txt == '':
+            txt = rst            
+        elif  rst != '' and txt != '0':
+            txt = txt + ' = a  ' + rst
+            
+        return txt
+    
+    def init_speaker(self):
+        config = ConfigParser()     
+        
+        if Path('src/files/config.ini').exists():
+            config.read('src/files/config.ini')
+            if config.has_section('lang_outputs'):
+                try:                    
+                    self.lang = int(config['lang_outputs']['lang'])
+                    self.rate = int(config['lang_outputs']['rate'])
+                except:                    
+                    self.lang = 2
+                    self.rate = 140
+        else:
+            self.lang = 2
+            self.rate = 140
+    
     
