@@ -19,7 +19,7 @@ class Scientific(QMainWindow):
         self.ui = Ui_Scientific()
         self.ui.setupUi(self)       
         properties.Properties.newProperties(self) 
-        self.setGeometry(50,50,685,540)
+        self.setGeometry(50,50,645,540)
         self.ui.st_controls.setGeometry(-10,122,0,0)
         
         
@@ -142,8 +142,15 @@ class Scientific(QMainWindow):
         self.ui.btn_m_plus.clicked.connect(self.addM)
         self.ui.btn_m_minus.clicked.connect(self.subtractM)
         self.ui.btn_mr.clicked.connect(self.getMemory)
-        self.ui.btn_mr_prod.clicked.connect(self.mrProduct)        
-        self.ui.btn_mr_sum.clicked.connect(self.addAction)  
+                
+        self.ui.btn_mr_min.clicked.connect(self.mrMin)  
+        self.ui.btn_mr_max.clicked.connect(self.mrMax)  
+        self.ui.btn_mr_sum.clicked.connect(self.mrSum)  
+        self.ui.btn_mr_prod.clicked.connect(self.mrProd)  
+        self.ui.btn_mr_mean.clicked.connect(self.mrMean)  
+        self.ui.btn_mr_median.clicked.connect(self.mrMedean)  
+        self.ui.btn_mr_mode.clicked.connect(self.mrMode)  
+        self.ui.btn_mr_clear.clicked.connect(self.ui.list_memory.clear)  
             
         self.ui.btn_comma.clicked.connect(self.setComma)        
         
@@ -154,6 +161,7 @@ class Scientific(QMainWindow):
         self.ui.btn_less.clicked.connect(lambda: self.setlogicalOperator('<')) 
         self.ui.btn_less_than.clicked.connect(lambda: self.setlogicalOperator('≦')) 
         self.ui.btn_not_equals.clicked.connect(lambda: self.setlogicalOperator('≠')) 
+        self.ui.btn_equals_equals.clicked.connect(lambda: self.setlogicalOperator('==')) 
         self.ui.btn_not.clicked.connect(lambda: self.setlogicalOperator(' not ')) 
         
         self.ui.btn_rd_bin.clicked.connect(lambda:self.sys_convert('bin'))
@@ -179,13 +187,13 @@ class Scientific(QMainWindow):
         self.expressionsList = {
                                 'sqrt':sqrt,'cuberoot':self.cubeRoot,'yroot':self.yRoot, 'e':e,'pi':pi, 'T':tau, 'percent': 100,
                                 'fact':factorial,'abs':abs,'rad':radians, 'deg':degrees,'gma':gamma, 'lgma':lgamma,
-                                'trunc':trunc,'ceil':ceil, 'floor':floor,'fabs':fabs, 'mode':mode,'mean':mean,'medn':median,
+                                'trunc':trunc,'ceil':ceil, 'floor':floor,'fabs':fabs, 
                                 'ln':log,'log':log10, 'log2':log2,'log1p':log1p, 'exp':exp,'expm1':expm1,
                                 'sin':sin, 'cos':cos, 'tan':tan, 'sinh':sinh, 'cosh':cosh, 'tanh':tanh, 'atan2':atan2,
                                 'asin':asin, 'acos':acos, 'atan':atan, 'asinh':asinh, 'acosh':acosh, 'atanh':atanh,
                                 'gcd':gcd, 'prod':self.fprod, 'sum':self.fsum, 'frexp':frexp,
                                 'comb':comb, 'hypot':hypot, 'perm':perm, 'ldexp':ldexp, 'lcm':self.lcm, 'rnd':random.random(),
-                                'min':min, 'max':max, 'mean':self.mean, 'medn':self.medn, 'mode':mode
+                                'min':min, 'max':max, 'mean':self.mean, 'medn':self.medn, 'mode':self.fmode,
                                 }
         
         self.symbolsList = [')','(','+','-','*','/','%','mod','√','^','e','π','exp','in','n!','log','x²','χʸ']
@@ -194,7 +202,7 @@ class Scientific(QMainWindow):
                         'mod','rnd','pi','','²√(','ᵌ√(','ⁿ√(','^(2)','^(3)','^(','10^(','*(','n!(', ' or ',' and ',' not ','≠','==',
                         'rad(','deg(','trunc(','ceil(','floor(','abs(','fabs(','round(',
                         'lgma(','gma(','log2(','ln(','log(','log1p(', 'exp(','expm1(','frexp(','ldexp(', 'perm(','hypot(',
-                        'comb(', 'min(','max(','prod(','sum(', 'lcm(','gcd(','mean(','medn(', 'mode('
+                        'comb(', 'min(','max(','prod(','sum(', 'lcm(','gcd(','mean(','medn(', 'mode(',
                         'sin(','cos(','tan(','sinh(','cosh(','tanh(','asin(', 'acos(','atan(','asinh(', 'acosh(','atanh(','atan2('
         )
         self.input_microphone = [
@@ -241,9 +249,7 @@ class Scientific(QMainWindow):
             else:
                 txt=f'{self.result}'
             self.ui.label_result.setText(txt)
-        
-    
-    
+            
     # least common multiple
     def lcm(self, a, b):
         return (a * b) / gcd(a, b)   
@@ -274,14 +280,13 @@ class Scientific(QMainWindow):
     def medn(self, *args):
         return median(args)    
     
-    def mode(self, *args):
+    def fmode(self, *args):
         return mode(args)
     
     def setFuncItems(self, func):
         self.ui.btn_comma.setEnabled(True)
         self.setFuncton(func)
-    
-        
+            
     def setComma(self):
         txt = self.ui.label_mr.text()
         if txt != '0':   
@@ -327,19 +332,448 @@ class Scientific(QMainWindow):
             pass   
         finally:
             self.ui.actionDict_input.setEnabled(True)   
+                
+    def clearCE(self):
+        txt = self.ui.label_mr.text()          
+        self.ui.label_result.setText('')         
         
-    def fromVoiceToText(self):
-        try:            
-            if threading.active_count() <= 1:
-                self.ui.actionPlay_Result.setDisabled(True)
-                threading.Thread(target=self.get_microphone).start()                                    
-        except:
-            pass   
-        finally:
-            self.ui.actionPlay_Result.setEnabled(True)   
+        if txt[-5:] in self.funcsList:
+            txt = txt[:-5]        
+        elif txt[-4:] in self.funcsList:
+            txt = txt[:-4]    
+        elif txt[-3:] in self.funcsList:
+            txt = txt[:-3]
+        elif txt[-2:] in self.funcsList:
+            txt = txt[:-2] 
+        elif re.match(r'^[0-9.]+$', txt[-1:]) and txt != '0':
+            for i in reversed(txt) :
+                if re.match(r'^[0-9.]+$', i) and txt != '0':
+                    txt= txt[:-1] 
+                else:
+                    break
+        else:
+            txt = txt[:-1]
+        
+        if txt == '': txt = '0'
+        self.ui.statusbar.showMessage('') 
+        self.ui.label_mr.setText(txt)
+        self.getResult()
+        
+    def setPows(self, num):
+        txt = self.ui.label_mr.text()    
+        
+        if txt =='' and self.ui.label_result.text() != '':            
+            self.ui.label_mr.setText(self.ui.label_result.text() + num)
+            self.ui.label_result.setText('')
+        elif re.match(r'^[0-9]+$', txt[-1:]) and self.input != '':
+            self.ui.label_mr.setText(txt + num)
+                
+    def voiceToText(self):
+        pass    
+        threading.Thread(target=self.get_microphone())      
+                
+    def formatVoiceToTextInput(self, txt):
+        txt = txt.replace('cien', '100')
+        txt = txt.replace('uno', '1')
+        inputList = txt.split()
+        
+        newtxt = ''
+        isnum=False
+        for n in inputList:
+            try:# verify if n is an int or a float number
+                eval(n)
+                isnum=True
+            except:
+                isnum=False
+            # verify that the str newtxt be able to works in eval function                    
+            if n in self.symbolsList or isnum:
+                newtxt+=n   
+        return newtxt       
+                
+    def transResult(self, func):
+        rest = self.ui.label_result.text()
+        txt = self.ui.label_mr.text()
+        if rest != '':
+            self.ui.label_mr.setText(f'{func}({rest})') 
+            self.ui.label_result.setText('')
+        elif re.match(r'^[0-9.]+$', txt[-1:]) and txt != '0':
+            for i in reversed(txt) :
+                if re.match(r'^[0-9.]+$', i) and txt != '0':
+                    txt += i
+                else:
+                    break  
+            self.ui.label_mr.setText(f'{func}({txt})')  
+            self.ui.label_result.setText('')      
+                            
+    def setNums(self, btn): 
+        txt = self.ui.label_mr.text()
+        if txt == '0': txt = '' 
+        
+        if txt.endswith(')'):            
+            self.ui.label_mr.setText(txt + f'*{btn.text()}')  
+        else:                 
+            self.ui.label_mr.setText(txt + btn.text())
+        self.input += btn.text() 
+        self.getResult()
+    
+    def setOperator(self, btn): 
+        self.input = ''          
+        if self.ui.label_mr.text() == '0':
+            self.ui.label_mr.setText('') 
+        txt = self.ui.label_mr.text()
+        
+        if txt == '' and self.ui.label_result.text() != '': 
+            txt = self.ui.label_result.text()  
             
+            
+        self.ui.label_mr.setText(self.txtFormat(txt, btn.text()))
+        self.ui.statusbar.showMessage('Awaiting input...',5000) 
         
-    def mrProduct(self):
+        self.ui.label_result.setText('')            
+        if self.ui.label_mr.text() == '':
+            self.ui.label_mr.setText('0') 
+            
+    def txtFormat(self, label, input):
+        txt = label + input
+                    
+        txt = txt.replace('**', input)
+        txt = txt.replace('(*', input)
+        txt = txt.replace('(/', input)
+        txt = txt.replace('(mod', input)
+        txt = txt.replace('(%', input)
+        txt = txt.replace('(^', input)
+        txt = txt.replace('(^', input)
+        txt = txt.replace('//', input)
+        txt = txt.replace('/*', input)
+        txt = txt.replace('*/', input)
+        txt = txt.replace('^^', input)
+        
+        if txt in self.simpleSymobolsList: 
+            txt = input
+            # block any operator
+        elif txt in self.symbolsList: 
+            txt = ''
+        
+        return txt
+    
+    def equals(self):   
+        """
+        Show and save in historial the input result, and reset the values
+        
+        this function works along to eval and cleanInput functions
+        
+        """
+        unformattedtxt= self.ui.label_mr.text()
+        while unformattedtxt.count('(') > unformattedtxt.count(')'):
+            unformattedtxt += ')' 
+            
+        while unformattedtxt.count('[') > unformattedtxt.count(']'):
+            unformattedtxt += ']' 
+            
+        txt = self.cleanInput()     
+        #show up the result
+        if txt != '' and (txt[-1:] not in self.operatorsList) and (txt != self.input) and (txt.count('(') == txt.count(')')):
+            # try:
+                self.result = eval(txt,self.expressionsList)                                            
+                self.sys_convert(self.base)
+                
+                self.ui.list_historial.addItem(unformattedtxt)
+                self.ui.list_historial.addItem(f"= {self.result} ({self.base}:  {self.ui.label_result.text()})")
+                self.input = ''
+                self.ui.label_mr.setText('')
+            # except Exception as ex:                
+            #     self.ui.label_mr.setStyleSheet('color:red')
+            #     self.ui.statusbar.showMessage(str(ex),5000)
+                
+        elif re.match(r'^[0-9.,]', txt):
+            self.ui.label_result.setText(txt)
+            self.input = ''
+            self.ui.label_mr.setText('')
+            self.ui.statusbar.showMessage('')
+                        
+    def getResult(self):
+        """
+        Show the input result every time a button like +, -, * or / is pressed
+        
+        """
+        txt = self.outputFormat()
+        self.ui.label_mr.setStyleSheet('color:black;')
+        try:
+            if self.input != '' and txt != '0' and (txt != self.input) and (txt.count('(') == txt.count(')')):               
+                self.result = eval(txt,self.expressionsList)                
+                self.sys_convert(self.base)                
+            else:
+                self.ui.label_result.setText('')
+        except Exception as ex:                
+            self.ui.label_mr.setStyleSheet('color:red')
+            self.ui.statusbar.showMessage(str(ex),5000)
+            
+    def outputFormat(self): 
+    
+        txt = self.ui.label_mr.text()
+            
+        txt = txt.replace('%', '/percent*')
+        txt = txt.replace('²√', 'sqrt')           
+        txt = txt.replace('^', '**')             
+        txt = txt.replace('mod', '%')             
+        txt = txt.replace(f'%e', 'mode')             
+        txt = txt.replace('ᵌ√', 'cuberoot')             
+        txt = txt.replace('ⁿ√', 'yroot')             
+        txt = txt.replace('π', 'pi')                       
+        txt = txt.replace('n!', 'fact')               
+        txt = txt.replace('≦', '<=')             
+        txt = txt.replace('≧', '>=')             
+        txt = txt.replace('≠', '!=')             
+            
+        return txt
+    
+    def sys_convert(self, base):
+        self.base = base
+        if self.result != '' and isinstance(self.result, tuple):
+            self.ui.label_result.setText(str(self.result))
+        elif self.result != '' and isinstance(self.result, bool):
+            self.ui.label_result.setText('True') if self.result == True else self.ui.label_result.setText('False')
+        elif self.result != '':
+            if self.base == 'f-e':
+                self.ui.label_result.setText(f"{self.result:.1E}")
+            elif self.base == 'hex':
+                self.ui.label_result.setText(f"{round(self.result):X}")
+            elif self.base == 'oct':
+                self.ui.label_result.setText(f"{round(self.result):o}")
+            elif self.base == 'bin':
+                self.ui.label_result.setText(f"{round(self.result):b}")
+            else:
+                # r_arr = f'{self.result:G}'.split('.')
+                # print(self.result)    
+                # print(r_arr[1]) 
+                
+                if '.' in str(self.result):     
+                    r_arr = str(self.result).split('.')
+                    if int(r_arr[1]) == 0: 
+                        self.ui.label_result.setText(f"{self.result :,.0F}") 
+                    else:
+                        txt = f"{r_arr[0]}.{r_arr[1]}"
+                        self.ui.label_result.setText(txt)
+                else:
+                #     if int(r_arr[1]) == 0: 
+                #         self.ui.label_result.setText(f"{self.result :.0F}") 
+                #     else:
+                    self.ui.label_result.setText(f"{self.result :,.0F}") 
+                
+        else:
+            self.ui.statusbar.showMessage('No result to convert', 5000)
+                
+    def inverseInput(self): 
+        """
+        Change the input to negative if it is positive and vice versa
+        examples:
+        1- if label = '25+30' then label = '25+(-30)' and vice versa
+        2- if label = '' then label = (- and vice versa
+        2- if label = '4893' then label = '(-4893' and vice versa        
+        2- if label = '4893/234*422-423' then label = '4893/234*422-(-423' and vice versa        
+        
+        """       
+        if self.ui.label_mr.text() == '0':
+            self.ui.label_mr.setText('')
+        txt =  self.ui.label_mr.text() 
+        cutlen = txt.rfind(self.input)
+        firstPart = txt[:cutlen]
+        secondPart = txt[cutlen:]
+        newTxt = f'{firstPart}(-{secondPart}'
+        subSecondPart = f'(-{secondPart}'
+        
+        if txt == '(-' or txt == '-':
+            self.ui.label_mr.setText('0')  
+        elif txt[-1:] == '(' and self.input == '':
+            self.ui.label_mr.setText(txt + '-')
+        elif txt == '' and self.input == '':
+            self.ui.label_mr.setText(txt + '-')
+        elif re.match(r'^[0-9.]+$', txt[-1:]) and self.input != '' and txt[cutlen-2:] != subSecondPart:
+        # elif re.match(r'^[0-9]+$', txt[-1:]) not in self.operatorsList and self.input != '' and txt[cutlen-2:] != subSecondPart:
+            self.ui.label_mr.setText(newTxt)
+        elif txt[cutlen-2:] == subSecondPart:
+            self.ui.label_mr.setText(firstPart[:-2] + secondPart)
+        
+    def setFuncton(self, func):
+        if self.ui.label_mr.text() == '0':
+            self.ui.label_mr.setText('')
+        txt = self.ui.label_mr.text()
+        
+        if txt[-1:] in self.operatorsList or txt == '' or re.match(r'^[,( ]+$', txt[-1:] ):
+            self.ui.label_mr.setText(txt + func)
+        elif  txt[-3:] != '*'+ func:
+            self.ui.label_mr.setText(txt + '*'+ func)
+        
+        self.input = ''
+        self.ui.statusbar.showMessage('Awaiting input...',5000) 
+    
+    def setConstant(self, const):
+        """
+        Represent the const e in the equation
+        Example:
+        if input = '5*e' in the eval function this it will be equal to: 5*2.718281828459045 = 13.591409142295226176801437356763
+        
+        """
+        
+        if self.ui.label_mr.text() == '0':
+            self.ui.label_mr.setText('')
+        txt = self.ui.label_mr.text()
+            
+        if re.match(r'^[0-9π]+$',txt[-1:]):
+            self.ui.label_mr.setText(f'{txt}*({const}')
+        else:
+            self.ui.label_mr.setText(txt + const)
+            
+    def setLeftParenthesis(self):
+        """
+        Open a parethesis
+        1-Example:
+        if input = '' then input it will be equal to: '('
+        
+        2-Example:
+        if input = '5453' then input it will be equal to: '5453*('
+        
+        3-Example:
+        if input = '5453+' then input it will be equal to: '5453+('        
+        
+        """
+        txt = self.ui.label_mr.text()         
+        if txt == '0':
+            self.ui.label_mr.setText('(')
+        elif re.match(r'^[0-9.)]+$',txt[-1:]):
+        # elif txt[-1:] not in self.operatorsList and txt[-1:] != '(':
+            self.ui.label_mr.setText(txt + '*(')
+        else:
+            self.ui.label_mr.setText(txt +'(')
+    
+    def setRightParenthesis(self):
+        """
+        Open and close parenthesis
+        this function works along with the setLeftParenthesis() function
+        and it will close as much parenthesis as be necesary
+        
+        1-Example:
+        if input = '' then input it will be equal to: '('
+        
+        2-Example:
+        if input = '5453' then input it will be equal to: '5453*('
+        
+        3-Example:
+        if input = '5453+' then input it will be equal to: '5453+('        
+        
+        """
+        txt= self.ui.label_mr.text()
+        if txt[-1:] ==',':
+            pass
+        elif txt[-1:] =='(':
+            self.ui.label_mr.setText(txt +'(')
+        elif txt[-1:] not in self.operatorsList and txt.count('(') > txt.count(')'):
+            self.ui.label_mr.setText(txt +')')
+        else:
+            self.setLeftParenthesis()
+        self.getResult()
+                
+    def cleanInput(self): 
+        """
+        It format the input to avoit error in eval function
+        
+        it skip +, -, *, /, (, and ) at the beginning and at the end of the input
+        
+        return a correct formatted string to the eval function
+        
+        """        
+        self.ui.label_mr.setStyleSheet('color:black;')       
+        txt = self.ui.label_mr.text()
+        
+        #remove symbols at the end
+        while txt[-1:] in self.operatorsList:
+            txt = txt[:-1]
+            self.ui.label_mr.setText(txt)
+                
+        #remove symbols at the beginning
+        while txt[:1] in self.operatorsList and txt[:1] != '+' and txt[:1] != '-':
+            txt = txt[1:]
+            self.ui.label_mr.setText(txt)        
+            
+        #add parethesis at the end if it need it            
+        while txt.count('(') > txt.count(')'):
+            txt += ')'            
+            self.ui.label_mr.setText(txt)
+            
+        txt = txt.replace('%', '/percent*')
+        txt = txt.replace('²√', 'sqrt')           
+        txt = txt.replace('^', '**')             
+        txt = txt.replace('mod', '%')             
+        txt = txt.replace(f'%e', 'mode')          
+        txt = txt.replace('ᵌ√', 'cuberoot')             
+        txt = txt.replace('ⁿ√', 'yroot')             
+        txt = txt.replace('π', 'pi')                       
+        txt = txt.replace('n!', 'fact')             
+        txt = txt.replace('≦', '<=')             
+        txt = txt.replace('≧', '>=')             
+        txt = txt.replace('≠', '!=')                
+            
+        return txt
+        
+    def clearC(self):
+        """
+        Reset all as defualt
+        
+        """
+        self.ui.label_result.setText('')
+        self.ui.label_mr.setText('0')        
+        self.input = ''
+        self.ui.statusbar.showMessage('')
+    
+    def mrMin(self):
+        '''
+        List the min value in memory 
+        
+        example: min(34, 53, 3, 98, ..., n)
+        
+        '''
+        ms = self.ui.list_memory
+        if ms.count() > 1:
+            self.ui.label_result.setText('')
+            lbl_txt = 'min('
+            for i in range(ms.count()):               
+                lbl_txt += ms.item(i).text() + ','
+            lbl_txt = lbl_txt[:-1] + ')'
+            self.setFuncton(lbl_txt)
+                            
+    def mrMax(self):
+        '''
+        List the max value in memory values
+        
+        example: prod(34, 53, 3, 98, ..., n)
+        
+        '''
+        ms = self.ui.list_memory
+        if ms.count() > 1:
+            self.ui.label_result.setText('')
+            lbl_txt = 'max('
+            for i in range(ms.count()):               
+                lbl_txt += ms.item(i).text() + ','
+            lbl_txt = lbl_txt[:-1] + ')'
+            self.setFuncton(lbl_txt)
+                            
+    def mrSum(self):
+        '''
+        List all memory values in the sum function
+        
+        example: prod(34, 53, 3, 98, ..., n)
+        
+        '''
+        ms = self.ui.list_memory
+        if ms.count() > 1:
+            self.ui.label_result.setText('')
+            lbl_txt = 'sum('
+            for i in range(ms.count()):               
+                lbl_txt += ms.item(i).text() + ','
+            lbl_txt = lbl_txt[:-1] + ')'
+            self.setFuncton(lbl_txt)
+                            
+    def mrProd(self):
         '''
         List all memory values in the prod function
         
@@ -348,27 +782,61 @@ class Scientific(QMainWindow):
         '''
         ms = self.ui.list_memory
         if ms.count() > 1:
+            self.ui.label_result.setText('')
             lbl_txt = 'prod('
             for i in range(ms.count()):               
                 lbl_txt += ms.item(i).text() + ','
             lbl_txt = lbl_txt[:-1] + ')'
             self.setFuncton(lbl_txt)
                             
-    def mrAddition(self):
+    def mrMode(self):
         '''
-        List all memory values in the sum function
+        List all memory values in the mode function
         
-        example: sum(34, 53, 3, 98, ..., n)
+        example: prod(34, 53, 3, 98, ..., n)
         
         '''
         ms = self.ui.list_memory
         if ms.count() > 1:
-            lbl_txt = 'sum('
+            self.ui.label_result.setText('')
+            lbl_txt = 'mode('
             for i in range(ms.count()):               
                 lbl_txt += ms.item(i).text() + ','
             lbl_txt = lbl_txt[:-1] + ')'
             self.setFuncton(lbl_txt)
-                        
+                    
+    def mrMean(self):
+        '''
+        List all memory values in the mean function
+        
+        example: prod(34, 53, 3, 98, ..., n)
+        
+        '''
+        ms = self.ui.list_memory
+        if ms.count() > 1:
+            self.ui.label_result.setText('')
+            lbl_txt = 'mean('
+            for i in range(ms.count()):               
+                lbl_txt += ms.item(i).text() + ','
+            lbl_txt = lbl_txt[:-1] + ')'
+            self.setFuncton(lbl_txt)
+        
+    def mrMedean(self):
+        '''
+        List all memory values in the medean function
+        
+        example: prod(34, 53, 3, 98, ..., n)
+        
+        '''
+        ms = self.ui.list_memory
+        if ms.count() > 1:
+            self.ui.label_result.setText('')
+            lbl_txt = 'medn('
+            for i in range(ms.count()):               
+                lbl_txt += ms.item(i).text() + ','
+            lbl_txt = lbl_txt[:-1] + ')'
+            self.setFuncton(lbl_txt)
+                
     def addM(self):
         ms = self.ui.list_memory
         if ms.count() > 0:
@@ -458,423 +926,22 @@ class Scientific(QMainWindow):
                 self.ui.label_mr.setText(txt)
             else:
                 self.ui.label_mr.setText(self.ui.label_mr.text() + txt)
-
-    def clearCE(self):
-        txt = self.ui.label_mr.text()          
-        self.ui.label_result.setText('')         
-        
-        if txt[-5:] in self.funcsList:
-            txt = txt[:-5]        
-        elif txt[-4:] in self.funcsList:
-            txt = txt[:-4]    
-        elif txt[-3:] in self.funcsList:
-            txt = txt[:-3]
-        elif txt[-2:] in self.funcsList:
-            txt = txt[:-2] 
-        elif re.match(r'^[0-9.]+$', txt[-1:]) and txt != '0':
-            for i in reversed(txt) :
-                if re.match(r'^[0-9.]+$', i) and txt != '0':
-                    txt= txt[:-1] 
-                else:
-                    break
-        else:
-            txt = txt[:-1]
-        
-        if txt == '': txt = '0'
-        self.ui.statusbar.showMessage('') 
-        self.ui.label_mr.setText(txt)
-        self.getResult()
-        
-    def setPows(self, num):
-        txt = self.ui.label_mr.text()    
-        
-        if txt =='' and self.ui.label_result.text() != '':            
-            self.ui.label_mr.setText(self.ui.label_result.text() + num)
-            self.ui.label_result.setText('')
-        elif re.match(r'^[0-9]+$', txt[-1:]) and self.input != '':
-            self.ui.label_mr.setText(txt + num)
-                
-    def voiceToText(self):
-        pass    
-        threading.Thread(target=self.get_microphone())      
-                
-    def formatVoiceToTextInput(self, txt):
-        txt = txt.replace('cien', '100')
-        txt = txt.replace('uno', '1')
-        inputList = txt.split()
-        
-        newtxt = ''
-        isnum=False
-        for n in inputList:
-            try:# verify if n is an int or a float number
-                eval(n)
-                isnum=True
-            except:
-                isnum=False
-            # verify that the str newtxt be able to works in eval function                    
-            if n in self.symbolsList or isnum:
-                newtxt+=n   
-        return newtxt       
-                
-    def transResult(self, func):
-        rest = self.ui.label_result.text()
-        txt = self.ui.label_mr.text()
-        if rest != '':
-            self.ui.label_mr.setText(f'{func}({rest})') 
-            self.ui.label_result.setText('')
-        elif re.match(r'^[0-9.]+$', txt[-1:]) and txt != '0':
-            for i in reversed(txt) :
-                if re.match(r'^[0-9.]+$', i) and txt != '0':
-                    txt += i
-                else:
-                    break  
-            self.ui.label_mr.setText(f'{func}({txt})')  
-            self.ui.label_result.setText('')      
-            
-                
-    def setNums(self, btn): 
-        txt = self.ui.label_mr.text()
-        if txt == '0': txt = '' 
-        
-        if txt.endswith(')'):            
-            self.ui.label_mr.setText(txt + f'*{btn.text()}')  
-        else:                 
-            self.ui.label_mr.setText(txt + btn.text())
-        self.input += btn.text() 
-        self.getResult()
-    
-    def setOperator(self, btn): 
-        self.input = ''          
-        if self.ui.label_mr.text() == '0':
-            self.ui.label_mr.setText('') 
-        txt = self.ui.label_mr.text()
-        
-        if txt == '' and self.ui.label_result.text() != '': 
-            txt = self.ui.label_result.text()  
-            
-            
-        self.ui.label_mr.setText(self.txtFormat(txt, btn.text()))
-        self.ui.statusbar.showMessage('Awaiting input...',5000) 
-        
-        self.ui.label_result.setText('')            
-        if self.ui.label_mr.text() == '':
-            self.ui.label_mr.setText('0') 
-    
-        
-    def txtFormat(self, label, input):
-        txt = label + input
                     
-        txt = txt.replace('**', input)
-        txt = txt.replace('(*', input)
-        txt = txt.replace('(/', input)
-        txt = txt.replace('(mod', input)
-        txt = txt.replace('(%', input)
-        txt = txt.replace('(^', input)
-        txt = txt.replace('(^', input)
-        txt = txt.replace('//', input)
-        txt = txt.replace('/*', input)
-        txt = txt.replace('*/', input)
-        txt = txt.replace('^^', input)
-        
-        if txt in self.simpleSymobolsList: 
-            txt = input
-            # block any operator
-        elif txt in self.symbolsList: 
-            txt = ''
-        
-        return txt
-    
-    def equals(self):   
-        """
-        Show and save in historial the input result, and reset the values
-        
-        this function works along to eval and cleanInput functions
-        
-        """
-        unformattedtxt= self.ui.label_mr.text()
-        while unformattedtxt.count('(') > unformattedtxt.count(')'):
-            unformattedtxt += ')' 
-            
-        while unformattedtxt.count('[') > unformattedtxt.count(']'):
-            unformattedtxt += ']' 
-            
-        txt = self.cleanInput()     
-        #show up the result
-        if txt != '' and (txt[-1:] not in self.operatorsList) and (txt != self.input) and (txt.count('(') == txt.count(')')):
-            try:
-                self.result = eval(txt,self.expressionsList)                                            
-                self.sys_convert(self.base)
-                
-                self.ui.list_historial.addItem(unformattedtxt)
-                self.ui.list_historial.addItem(f"= {self.result} ({self.base}:  {self.ui.label_result.text()})")
-                self.input = ''
-                self.ui.label_mr.setText('')
-            except Exception as ex:                
-                self.ui.label_mr.setStyleSheet('color:red')
-                self.ui.statusbar.showMessage(str(ex),5000)
-                
-        elif re.match(r'^[0-9.,]', txt):
-            self.ui.label_result.setText(txt)
-            self.input = ''
-            self.ui.label_mr.setText('')
-            self.ui.statusbar.showMessage('')
-            
-            
-    def getResult(self):
-        """
-        Show the input result every time a button like +, -, * or / is pressed
-        
-        """
-        txt = self.outputFormat()
-        self.ui.label_mr.setStyleSheet('color:black;')
-        try:
-            if self.input != '' and txt != '0' and (txt != self.input) and (txt.count('(') == txt.count(')')):               
-                self.result = eval(txt,self.expressionsList)                
-                self.sys_convert(self.base)                
-            else:
-                self.ui.label_result.setText('')
-        except Exception as ex:                
-            self.ui.label_mr.setStyleSheet('color:red')
-            self.ui.statusbar.showMessage(str(ex),5000)
-            
-            
-    def outputFormat(self): 
-    
-        txt = self.ui.label_mr.text()
-            
-        txt = txt.replace('%', '/percent*')
-        txt = txt.replace('²√', 'sqrt')           
-        txt = txt.replace('^', '**')             
-        txt = txt.replace('mod', '%')             
-        txt = txt.replace('e˟', 'e_x')             
-        txt = txt.replace('ᵌ√', 'cuberoot')             
-        txt = txt.replace('ⁿ√', 'yroot')             
-        txt = txt.replace('π', 'pi')                       
-        txt = txt.replace('n!', 'fact')               
-        txt = txt.replace('≦', '<=')             
-        txt = txt.replace('≧', '>=')             
-        txt = txt.replace('≠', '!=')             
-            
-        return txt
-    
-    def sys_convert(self, base):
-        self.base = base
-        if self.result != '' and isinstance(self.result, tuple):
-            self.ui.label_result.setText(str(self.result))
-        elif self.result != '' and isinstance(self.result, bool):
-            self.ui.label_result.setText('True') if self.result == True else self.ui.label_result.setText('False')
-        elif self.result != '':
-            if self.base == 'f-e':
-                self.ui.label_result.setText(f"{self.result:.1E}")
-            elif self.base == 'hex':
-                self.ui.label_result.setText(f"{round(self.result):X}")
-            elif self.base == 'oct':
-                self.ui.label_result.setText(f"{round(self.result):o}")
-            elif self.base == 'bin':
-                self.ui.label_result.setText(f"{round(self.result):b}")
-            else:
-                # r_arr = f'{self.result:G}'.split('.')
-                # print(self.result)    
-                # print(r_arr[1]) 
-                
-                if '.' in str(self.result):     
-                    r_arr = str(self.result).split('.')
-                    if int(r_arr[1]) == 0: 
-                        self.ui.label_result.setText(f"{self.result :,.0F}") 
-                    else:
-                        txt = f"{r_arr[0]}.{r_arr[1]}"
-                        self.ui.label_result.setText(txt)
-                else:
-                #     if int(r_arr[1]) == 0: 
-                #         self.ui.label_result.setText(f"{self.result :.0F}") 
-                #     else:
-                    self.ui.label_result.setText(f"{self.result :,.0F}") 
-                
-        else:
-            self.ui.statusbar.showMessage('No result to convert', 5000)
-                
-    def inverseInput(self): 
-        """
-        Change the input to negative if it is positive and vice versa
-        examples:
-        1- if label = '25+30' then label = '25+(-30)' and vice versa
-        2- if label = '' then label = (- and vice versa
-        2- if label = '4893' then label = '(-4893' and vice versa        
-        2- if label = '4893/234*422-423' then label = '4893/234*422-(-423' and vice versa        
-        
-        """       
-        if self.ui.label_mr.text() == '0':
-            self.ui.label_mr.setText('')
-        txt =  self.ui.label_mr.text() 
-        cutlen = txt.rfind(self.input)
-        firstPart = txt[:cutlen]
-        secondPart = txt[cutlen:]
-        newTxt = f'{firstPart}(-{secondPart}'
-        subSecondPart = f'(-{secondPart}'
-        
-        if txt == '(-' or txt == '-':
-            self.ui.label_mr.setText('0')  
-        elif txt[-1:] == '(' and self.input == '':
-            self.ui.label_mr.setText(txt + '-')
-        elif txt == '' and self.input == '':
-            self.ui.label_mr.setText(txt + '-')
-        elif re.match(r'^[0-9.]+$', txt[-1:]) and self.input != '' and txt[cutlen-2:] != subSecondPart:
-        # elif re.match(r'^[0-9]+$', txt[-1:]) not in self.operatorsList and self.input != '' and txt[cutlen-2:] != subSecondPart:
-            self.ui.label_mr.setText(newTxt)
-        elif txt[cutlen-2:] == subSecondPart:
-            self.ui.label_mr.setText(firstPart[:-2] + secondPart)
-    
-    
-    def setFuncton(self, func):
-        if self.ui.label_mr.text() == '0':
-            self.ui.label_mr.setText('')
-        txt = self.ui.label_mr.text()
-        
-        if txt[-1:] in self.operatorsList or txt == '' or re.match(r'^[,( ]+$', txt[-1:] ):
-            self.ui.label_mr.setText(txt + func)
-        elif  txt[-3:] != '*'+ func:
-            self.ui.label_mr.setText(txt + '*'+ func)
-        
-        self.input = ''
-        self.ui.statusbar.showMessage('Awaiting input...',5000) 
-    
-    def setConstant(self, const):
-        """
-        Represent the const e in the equation
-        Example:
-        if input = '5*e' in the eval function this it will be equal to: 5*2.718281828459045 = 13.591409142295226176801437356763
-        
-        """
-        
-        if self.ui.label_mr.text() == '0':
-            self.ui.label_mr.setText('')
-        txt = self.ui.label_mr.text()
-            
-        if re.match(r'^[0-9π]+$',txt[-1:]):
-            self.ui.label_mr.setText(f'{txt}*({const}')
-        else:
-            self.ui.label_mr.setText(txt + const)
-            
-    def setLeftParenthesis(self):
-        """
-        Open a parethesis
-        1-Example:
-        if input = '' then input it will be equal to: '('
-        
-        2-Example:
-        if input = '5453' then input it will be equal to: '5453*('
-        
-        3-Example:
-        if input = '5453+' then input it will be equal to: '5453+('        
-        
-        """
-        txt = self.ui.label_mr.text()         
-        if txt == '0':
-            self.ui.label_mr.setText('(')
-        elif re.match(r'^[0-9.)]+$',txt[-1:]):
-        # elif txt[-1:] not in self.operatorsList and txt[-1:] != '(':
-            self.ui.label_mr.setText(txt + '*(')
-        else:
-            self.ui.label_mr.setText(txt +'(')
-    
-    def setRightParenthesis(self):
-        """
-        Open and close parenthesis
-        this function works along with the setLeftParenthesis() function
-        and it will close as much parenthesis as be necesary
-        
-        1-Example:
-        if input = '' then input it will be equal to: '('
-        
-        2-Example:
-        if input = '5453' then input it will be equal to: '5453*('
-        
-        3-Example:
-        if input = '5453+' then input it will be equal to: '5453+('        
-        
-        """
-        txt= self.ui.label_mr.text()
-        if txt[-1:] ==',':
-            pass
-        elif txt[-1:] =='(':
-            self.ui.label_mr.setText(txt +'(')
-        elif txt[-1:] not in self.operatorsList and txt.count('(') > txt.count(')'):
-            self.ui.label_mr.setText(txt +')')
-        else:
-            self.setLeftParenthesis()
-        self.getResult()
-        
-        
-    def cleanInput(self): 
-        """
-        It format the input to avoit error in eval function
-        
-        it skip +, -, *, /, (, and ) at the beginning and at the end of the input
-        
-        return a correct formatted string to the eval function
-        
-        """        
-        self.ui.label_mr.setStyleSheet('color:black;')       
-        txt = self.ui.label_mr.text()
-        
-        #remove symbols at the end
-        while txt[-1:] in self.operatorsList:
-            txt = txt[:-1]
-            self.ui.label_mr.setText(txt)
-                
-        #remove symbols at the beginning
-        while txt[:1] in self.operatorsList and txt[:1] != '+' and txt[:1] != '-':
-            txt = txt[1:]
-            self.ui.label_mr.setText(txt)        
-            
-        #add parethesis at the end if it need it            
-        while txt.count('(') > txt.count(')'):
-            txt += ')'            
-            self.ui.label_mr.setText(txt)
-            
-        txt = txt.replace('%', '/percent*')
-        txt = txt.replace('²√', 'sqrt')           
-        txt = txt.replace('^', '**')             
-        txt = txt.replace('mod', '%')             
-        txt = txt.replace('e˟', 'e_x')             
-        txt = txt.replace('ᵌ√', 'cuberoot')             
-        txt = txt.replace('ⁿ√', 'yroot')             
-        txt = txt.replace('π', 'pi')                       
-        txt = txt.replace('n!', 'fact')             
-        txt = txt.replace('≦', '<=')             
-        txt = txt.replace('≧', '>=')             
-        txt = txt.replace('≠', '!=')               
-        txt = txt.replace('⩵', '==')               
-            
-        return txt
-        
-    def clearC(self):
-        """
-        Reset all as defualt
-        
-        """
-        self.ui.label_result.setText('')
-        self.ui.label_mr.setText('0')        
-        self.input = ''
-        self.ui.statusbar.showMessage('')
-        
-            
     def showHideMemory(self):
         """
         Show and switch between contorls and historial display
         
         """
         if self.ui.st_controls.width() == 0 and self.ui.st_controls.currentIndex() == 1:
-            self.ui.st_controls.setGeometry(-10,122,321,351)
+            self.ui.st_controls.setGeometry(-10,122,411,391)
         elif self.ui.st_controls.width() != 0 and self.ui.st_controls.currentIndex() == 0:
             self.ui.st_controls.setCurrentIndex(1)
         elif self.ui.st_controls.width() == 0 and self.ui.st_controls.currentIndex() == 0:
             self.ui.st_controls.setCurrentIndex(1)
-            self.ui.st_controls.setGeometry(-10,122,321,351)
+            self.ui.st_controls.setGeometry(-10,122,411,391)
         else:
             self.ui.st_controls.setGeometry(-10,122,0,0)
-            
-    
+                
     def showHideHistory(self):
         """
         Show and switch between contorls and memory display
@@ -882,17 +949,15 @@ class Scientific(QMainWindow):
         """
             
         if self.ui.st_controls.width() == 0 and self.ui.st_controls.currentIndex() == 0:
-            self.ui.st_controls.setGeometry(-10,122,321,351)
+            self.ui.st_controls.setGeometry(-10,122,411,391)
         elif self.ui.st_controls.width() != 0 and self.ui.st_controls.currentIndex() == 1:
             self.ui.st_controls.setCurrentIndex(0)
         elif self.ui.st_controls.width() == 0 and self.ui.st_controls.currentIndex() == 1:
             self.ui.st_controls.setCurrentIndex(0)
-            self.ui.st_controls.setGeometry(-10,122,321,351)
+            self.ui.st_controls.setGeometry(-10,122,411,391)
         else:
             self.ui.st_controls.setGeometry(-10,122,0,0)
-            
-            
-    
+                
     def delOne(self):  
         """
         Remove the last character on the input string
@@ -930,8 +995,6 @@ class Scientific(QMainWindow):
             self.input += '.'
             self.ui.label_mr.setText(self.ui.label_mr.text() + '.')
     
-    
-
     def get_microphone(self):
         speech_engine = sr.Recognizer()
         self.ui.actionDict_input.setIcon(QIcon("src/imgs/microOn.png"))
@@ -950,6 +1013,16 @@ class Scientific(QMainWindow):
             self.ui.actionDict_input.setIcon(QIcon("src/imgs/microOff.png"))
             self.ui.statusbar.showMessage("")
 
+    def fromVoiceToText(self):
+        try:            
+            if threading.active_count() <= 1:
+                self.ui.actionPlay_Result.setDisabled(True)
+                threading.Thread(target=self.get_microphone).start()                                    
+        except:
+            pass   
+        finally:
+            self.ui.actionPlay_Result.setEnabled(True) 
+            
     #speak aloud code   
     def talkAloud(self):
         self.init_speaker()#init the voice and the rate      

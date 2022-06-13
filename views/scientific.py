@@ -19,19 +19,20 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
 from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QGroupBox,
     QHBoxLayout, QLabel, QListWidget, QListWidgetItem,
     QMainWindow, QMenu, QMenuBar, QPushButton,
-    QRadioButton, QSizePolicy, QSpacerItem, QStackedWidget,
-    QStatusBar, QToolBar, QVBoxLayout, QWidget)
+    QRadioButton, QSizePolicy, QStackedWidget, QStatusBar,
+    QToolBar, QVBoxLayout, QWidget)
 from src.files import icons
 
 class Ui_Scientific(object):
     def setupUi(self, Scientific):
         if not Scientific.objectName():
             Scientific.setObjectName(u"Scientific")
-        Scientific.resize(646, 542)
+        Scientific.resize(643, 537)
         icon = QIcon()
-        icon.addFile(u"../src/imgs/scientific.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u":/icons/scientific.png", QSize(), QIcon.Normal, QIcon.Off)
         Scientific.setWindowIcon(icon)
         Scientific.setAutoFillBackground(True)
+        Scientific.setIconSize(QSize(30, 30))
         self.actionStandard = QAction(Scientific)
         self.actionStandard.setObjectName(u"actionStandard")
         icon1 = QIcon()
@@ -129,6 +130,14 @@ class Ui_Scientific(object):
         self.qglayout.setFlat(False)
         self.gridLayout_4 = QGridLayout(self.qglayout)
         self.gridLayout_4.setObjectName(u"gridLayout_4")
+        self.btn_sinh = QPushButton(self.qglayout)
+        self.btn_sinh.setObjectName(u"btn_sinh")
+        self.btn_sinh.setStyleSheet(u"background-color: rgb(255, 250, 199);")
+        self.btn_sinh.setAutoDefault(False)
+        self.btn_sinh.setFlat(False)
+
+        self.gridLayout_4.addWidget(self.btn_sinh, 9, 3, 1, 1)
+
         self.btn_atan2 = QPushButton(self.qglayout)
         self.btn_atan2.setObjectName(u"btn_atan2")
 
@@ -141,14 +150,6 @@ class Ui_Scientific(object):
         self.btn_sqrtN.setFlat(False)
 
         self.gridLayout_4.addWidget(self.btn_sqrtN, 8, 5, 1, 1)
-
-        self.btn000 = QPushButton(self.qglayout)
-        self.btn000.setObjectName(u"btn000")
-        self.btn000.setStyleSheet(u"background-color: rgb(255, 255, 255);")
-        self.btn000.setAutoDefault(False)
-        self.btn000.setFlat(False)
-
-        self.gridLayout_4.addWidget(self.btn000, 11, 9, 1, 1)
 
         self.btn_ln = QPushButton(self.qglayout)
         self.btn_ln.setObjectName(u"btn_ln")
@@ -172,6 +173,12 @@ class Ui_Scientific(object):
 
         self.gridLayout_4.addWidget(self.btn_divide, 7, 11, 1, 1)
 
+        self.btn_prod = QPushButton(self.qglayout)
+        self.btn_prod.setObjectName(u"btn_prod")
+        self.btn_prod.setStyleSheet(u"background-color: rgb(170, 170, 255);")
+
+        self.gridLayout_4.addWidget(self.btn_prod, 13, 3, 1, 1)
+
         self.btn_atanh = QPushButton(self.qglayout)
         self.btn_atanh.setObjectName(u"btn_atanh")
         self.btn_atanh.setStyleSheet(u"background-color: rgb(255, 250, 199);")
@@ -179,6 +186,20 @@ class Ui_Scientific(object):
         self.btn_atanh.setFlat(False)
 
         self.gridLayout_4.addWidget(self.btn_atanh, 10, 5, 1, 1)
+
+        self.btn_trunc = QPushButton(self.qglayout)
+        self.btn_trunc.setObjectName(u"btn_trunc")
+        self.btn_trunc.setStyleSheet(u"background-color: rgb(223, 223, 0);")
+        self.btn_trunc.setAutoDefault(False)
+        self.btn_trunc.setFlat(False)
+
+        self.gridLayout_4.addWidget(self.btn_trunc, 12, 0, 1, 1)
+
+        self.btn_mean = QPushButton(self.qglayout)
+        self.btn_mean.setObjectName(u"btn_mean")
+        self.btn_mean.setStyleSheet(u"background-color: rgb(170, 170, 255);")
+
+        self.gridLayout_4.addWidget(self.btn_mean, 13, 4, 1, 1)
 
         self.btn_log = QPushButton(self.qglayout)
         self.btn_log.setObjectName(u"btn_log")
@@ -204,8 +225,16 @@ class Ui_Scientific(object):
 
         self.gridLayout_4.addWidget(self.btn_asinh, 10, 3, 1, 1)
 
+        self.btn_comma = QPushButton(self.qglayout)
+        self.btn_comma.setObjectName(u"btn_comma")
+        self.btn_comma.setEnabled(True)
+        self.btn_comma.setStyleSheet(u"background-color: rgb(170, 170, 127);")
+
+        self.gridLayout_4.addWidget(self.btn_comma, 13, 8, 1, 1)
+
         self.btn_mr = QPushButton(self.qglayout)
         self.btn_mr.setObjectName(u"btn_mr")
+        self.btn_mr.setStyleSheet(u"background-color: rgb(255, 179, 169)")
 
         self.gridLayout_4.addWidget(self.btn_mr, 0, 6, 1, 1)
 
@@ -251,6 +280,14 @@ class Ui_Scientific(object):
 
         self.gridLayout_4.addWidget(self.btn_cosh, 9, 4, 1, 1)
 
+        self.btn_ceil = QPushButton(self.qglayout)
+        self.btn_ceil.setObjectName(u"btn_ceil")
+        self.btn_ceil.setStyleSheet(u"background-color: rgb(223, 223, 0);")
+        self.btn_ceil.setAutoDefault(False)
+        self.btn_ceil.setFlat(False)
+
+        self.gridLayout_4.addWidget(self.btn_ceil, 12, 4, 1, 1)
+
         self.btn_cuberoot = QPushButton(self.qglayout)
         self.btn_cuberoot.setObjectName(u"btn_cuberoot")
         self.btn_cuberoot.setStyleSheet(u"background:limegreen;")
@@ -258,6 +295,12 @@ class Ui_Scientific(object):
         self.btn_cuberoot.setFlat(False)
 
         self.gridLayout_4.addWidget(self.btn_cuberoot, 7, 4, 1, 1)
+
+        self.btn_round = QPushButton(self.qglayout)
+        self.btn_round.setObjectName(u"btn_round")
+        self.btn_round.setStyleSheet(u"background-color: rgb(223, 223, 0);")
+
+        self.gridLayout_4.addWidget(self.btn_round, 12, 5, 1, 1)
 
         self.btn_sin = QPushButton(self.qglayout)
         self.btn_sin.setObjectName(u"btn_sin")
@@ -267,30 +310,53 @@ class Ui_Scientific(object):
 
         self.gridLayout_4.addWidget(self.btn_sin, 9, 0, 1, 1)
 
+        self.btn_mode = QPushButton(self.qglayout)
+        self.btn_mode.setObjectName(u"btn_mode")
+        self.btn_mode.setStyleSheet(u"background-color: rgb(170, 170, 255);")
+
+        self.gridLayout_4.addWidget(self.btn_mode, 13, 6, 1, 1)
+
+        self.btn_fabs = QPushButton(self.qglayout)
+        self.btn_fabs.setObjectName(u"btn_fabs")
+        self.btn_fabs.setStyleSheet(u"background-color: rgb(223, 223, 0);")
+
+        self.gridLayout_4.addWidget(self.btn_fabs, 12, 2, 1, 1)
+
         self.btn_historial_show = QPushButton(self.qglayout)
         self.btn_historial_show.setObjectName(u"btn_historial_show")
         palette = QPalette()
-        brush = QBrush(QColor(255, 0, 0, 255))
+        brush = QBrush(QColor(255, 169, 185, 255))
         brush.setStyle(Qt.SolidPattern)
-        palette.setBrush(QPalette.Active, QPalette.ButtonText, brush)
-        palette.setBrush(QPalette.Active, QPalette.LinkVisited, brush)
-        brush1 = QBrush(QColor(0, 0, 0, 255))
+        palette.setBrush(QPalette.Active, QPalette.Button, brush)
+        brush1 = QBrush(QColor(255, 0, 0, 255))
         brush1.setStyle(Qt.SolidPattern)
-        palette.setBrush(QPalette.Inactive, QPalette.ButtonText, brush1)
-        brush2 = QBrush(QColor(255, 0, 255, 255))
+        palette.setBrush(QPalette.Active, QPalette.ButtonText, brush1)
+        palette.setBrush(QPalette.Active, QPalette.Base, brush)
+        palette.setBrush(QPalette.Active, QPalette.Window, brush)
+        palette.setBrush(QPalette.Active, QPalette.LinkVisited, brush1)
+        palette.setBrush(QPalette.Inactive, QPalette.Button, brush)
+        brush2 = QBrush(QColor(0, 0, 0, 255))
         brush2.setStyle(Qt.SolidPattern)
-        palette.setBrush(QPalette.Inactive, QPalette.LinkVisited, brush2)
-        brush3 = QBrush(QColor(120, 120, 120, 255))
+        palette.setBrush(QPalette.Inactive, QPalette.ButtonText, brush2)
+        palette.setBrush(QPalette.Inactive, QPalette.Base, brush)
+        palette.setBrush(QPalette.Inactive, QPalette.Window, brush)
+        brush3 = QBrush(QColor(255, 0, 255, 255))
         brush3.setStyle(Qt.SolidPattern)
-        palette.setBrush(QPalette.Disabled, QPalette.ButtonText, brush3)
-        palette.setBrush(QPalette.Disabled, QPalette.LinkVisited, brush2)
+        palette.setBrush(QPalette.Inactive, QPalette.LinkVisited, brush3)
+        palette.setBrush(QPalette.Disabled, QPalette.Button, brush)
+        brush4 = QBrush(QColor(120, 120, 120, 255))
+        brush4.setStyle(Qt.SolidPattern)
+        palette.setBrush(QPalette.Disabled, QPalette.ButtonText, brush4)
+        palette.setBrush(QPalette.Disabled, QPalette.Base, brush)
+        palette.setBrush(QPalette.Disabled, QPalette.Window, brush)
+        palette.setBrush(QPalette.Disabled, QPalette.LinkVisited, brush3)
         self.btn_historial_show.setPalette(palette)
         font2 = QFont()
         font2.setFamilies([u"Roboto Black"])
         font2.setPointSize(16)
         font2.setBold(True)
         self.btn_historial_show.setFont(font2)
-        self.btn_historial_show.setStyleSheet(u"")
+        self.btn_historial_show.setStyleSheet(u"background-color: rgb(255, 169, 185);")
         icon11 = QIcon()
         icon11.addFile(u":/icons/history.png", QSize(), QIcon.Normal, QIcon.Off)
         self.btn_historial_show.setIcon(icon11)
@@ -307,13 +373,41 @@ class Ui_Scientific(object):
 
         self.gridLayout_4.addWidget(self.btn_2X, 10, 7, 1, 1)
 
+        self.btn_floor = QPushButton(self.qglayout)
+        self.btn_floor.setObjectName(u"btn_floor")
+        self.btn_floor.setStyleSheet(u"background-color: rgb(223, 223, 0);")
+        self.btn_floor.setAutoDefault(False)
+        self.btn_floor.setFlat(False)
+
+        self.gridLayout_4.addWidget(self.btn_floor, 12, 3, 1, 1)
+
+        self.btn_min = QPushButton(self.qglayout)
+        self.btn_min.setObjectName(u"btn_min")
+        self.btn_min.setStyleSheet(u"background-color: rgb(170, 170, 255);")
+
+        self.gridLayout_4.addWidget(self.btn_min, 13, 0, 1, 1)
+
         self.btn_c = QPushButton(self.qglayout)
         self.btn_c.setObjectName(u"btn_c")
-        self.btn_c.setStyleSheet(u"background-color: rgb(255, 0, 0);")
+        self.btn_c.setStyleSheet(u"background-color: rgb(255, 0, 0);\n"
+"color: rgb(255, 255, 255);\n"
+"")
         self.btn_c.setAutoDefault(False)
         self.btn_c.setFlat(False)
 
         self.gridLayout_4.addWidget(self.btn_c, 6, 9, 1, 1)
+
+        self.btn_frexp = QPushButton(self.qglayout)
+        self.btn_frexp.setObjectName(u"btn_frexp")
+        self.btn_frexp.setStyleSheet(u"background-color: rgb(231, 201, 48)")
+
+        self.gridLayout_4.addWidget(self.btn_frexp, 12, 9, 1, 1)
+
+        self.btn_greater_than = QPushButton(self.qglayout)
+        self.btn_greater_than.setObjectName(u"btn_greater_than")
+        self.btn_greater_than.setStyleSheet(u"background-color: rgb(66, 205, 255);")
+
+        self.gridLayout_4.addWidget(self.btn_greater_than, 7, 1, 1, 1)
 
         self.btn_sqrt = QPushButton(self.qglayout)
         self.btn_sqrt.setObjectName(u"btn_sqrt")
@@ -342,6 +436,12 @@ class Ui_Scientific(object):
 
         self.gridLayout_4.addWidget(self.btn_mod, 6, 7, 1, 1)
 
+        self.btn_medn = QPushButton(self.qglayout)
+        self.btn_medn.setObjectName(u"btn_medn")
+        self.btn_medn.setStyleSheet(u"background-color: rgb(170, 170, 255);")
+
+        self.gridLayout_4.addWidget(self.btn_medn, 13, 5, 1, 1)
+
         self.btn_mult = QPushButton(self.qglayout)
         self.btn_mult.setObjectName(u"btn_mult")
         self.btn_mult.setStyleSheet(u"background-color: rgb(170, 255, 255);")
@@ -350,18 +450,23 @@ class Ui_Scientific(object):
 
         self.gridLayout_4.addWidget(self.btn_mult, 8, 11, 1, 1)
 
+        self.btn_lcm = QPushButton(self.qglayout)
+        self.btn_lcm.setObjectName(u"btn_lcm")
+        self.btn_lcm.setStyleSheet(u"background-color: rgb(231, 201, 48)")
+
+        self.gridLayout_4.addWidget(self.btn_lcm, 12, 8, 1, 1)
+
         self.btn_m_minus = QPushButton(self.qglayout)
         self.btn_m_minus.setObjectName(u"btn_m_minus")
+        self.btn_m_minus.setStyleSheet(u"background-color: rgb(255, 179, 169)")
 
         self.gridLayout_4.addWidget(self.btn_m_minus, 0, 8, 1, 1)
 
-        self.btn00 = QPushButton(self.qglayout)
-        self.btn00.setObjectName(u"btn00")
-        self.btn00.setStyleSheet(u"background-color: rgb(255, 255, 255);")
-        self.btn00.setAutoDefault(False)
-        self.btn00.setFlat(False)
+        self.btn_max = QPushButton(self.qglayout)
+        self.btn_max.setObjectName(u"btn_max")
+        self.btn_max.setStyleSheet(u"background-color: rgb(170, 170, 255);")
 
-        self.gridLayout_4.addWidget(self.btn00, 11, 8, 1, 1)
+        self.gridLayout_4.addWidget(self.btn_max, 13, 1, 1, 1)
 
         self.btn_less = QPushButton(self.qglayout)
         self.btn_less.setObjectName(u"btn_less")
@@ -393,11 +498,47 @@ class Ui_Scientific(object):
 
         self.gridLayout_4.addWidget(self.btn6, 8, 10, 1, 1)
 
-        self.btn_equal = QPushButton(self.qglayout)
-        self.btn_equal.setObjectName(u"btn_equal")
-        self.btn_equal.setStyleSheet(u"background-color: rgb(0, 255, 0);")
+        self.groupBox_2 = QGroupBox(self.qglayout)
+        self.groupBox_2.setObjectName(u"groupBox_2")
+        self.groupBox_2.setAlignment(Qt.AlignCenter)
+        self.horizontalLayout_3 = QHBoxLayout(self.groupBox_2)
+        self.horizontalLayout_3.setSpacing(0)
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.horizontalLayout_3.setContentsMargins(9, 0, -1, -1)
+        self.btn_rd_bin = QRadioButton(self.groupBox_2)
+        self.btn_rd_bin.setObjectName(u"btn_rd_bin")
 
-        self.gridLayout_4.addWidget(self.btn_equal, 11, 10, 1, 2)
+        self.horizontalLayout_3.addWidget(self.btn_rd_bin)
+
+        self.btn_rd_oct = QRadioButton(self.groupBox_2)
+        self.btn_rd_oct.setObjectName(u"btn_rd_oct")
+
+        self.horizontalLayout_3.addWidget(self.btn_rd_oct)
+
+        self.btn_rd_dec = QRadioButton(self.groupBox_2)
+        self.btn_rd_dec.setObjectName(u"btn_rd_dec")
+        self.btn_rd_dec.setChecked(True)
+
+        self.horizontalLayout_3.addWidget(self.btn_rd_dec)
+
+        self.btn_rd_hex = QRadioButton(self.groupBox_2)
+        self.btn_rd_hex.setObjectName(u"btn_rd_hex")
+
+        self.horizontalLayout_3.addWidget(self.btn_rd_hex)
+
+        self.btn_rd_fe = QRadioButton(self.groupBox_2)
+        self.btn_rd_fe.setObjectName(u"btn_rd_fe")
+
+        self.horizontalLayout_3.addWidget(self.btn_rd_fe)
+
+
+        self.gridLayout_4.addWidget(self.groupBox_2, 0, 0, 1, 5)
+
+        self.btn_comb = QPushButton(self.qglayout)
+        self.btn_comb.setObjectName(u"btn_comb")
+        self.btn_comb.setStyleSheet(u"background-color: rgb(231, 201, 48)")
+
+        self.gridLayout_4.addWidget(self.btn_comb, 12, 6, 1, 1)
 
         self.btn_mc = QPushButton(self.qglayout)
         self.btn_mc.setObjectName(u"btn_mc")
@@ -426,6 +567,12 @@ class Ui_Scientific(object):
 
         self.gridLayout_4.addWidget(self.btn_or, 7, 2, 1, 1)
 
+        self.btn_less_than = QPushButton(self.qglayout)
+        self.btn_less_than.setObjectName(u"btn_less_than")
+        self.btn_less_than.setStyleSheet(u"background-color: rgb(66, 205, 255);")
+
+        self.gridLayout_4.addWidget(self.btn_less_than, 7, 0, 1, 1)
+
         self.btn_factorial = QPushButton(self.qglayout)
         self.btn_factorial.setObjectName(u"btn_factorial")
         self.btn_factorial.setStyleSheet(u"background:limegreen;")
@@ -433,14 +580,6 @@ class Ui_Scientific(object):
         self.btn_factorial.setFlat(False)
 
         self.gridLayout_4.addWidget(self.btn_factorial, 7, 7, 1, 1)
-
-        self.btn_inverse = QPushButton(self.qglayout)
-        self.btn_inverse.setObjectName(u"btn_inverse")
-        self.btn_inverse.setStyleSheet(u"background-color: rgb(255, 170, 0);")
-        self.btn_inverse.setAutoDefault(False)
-        self.btn_inverse.setFlat(False)
-
-        self.gridLayout_4.addWidget(self.btn_inverse, 10, 8, 1, 1)
 
         self.btn7 = QPushButton(self.qglayout)
         self.btn7.setObjectName(u"btn7")
@@ -450,11 +589,13 @@ class Ui_Scientific(object):
 
         self.gridLayout_4.addWidget(self.btn7, 7, 8, 1, 1)
 
-        self.btn_not_equals = QPushButton(self.qglayout)
-        self.btn_not_equals.setObjectName(u"btn_not_equals")
-        self.btn_not_equals.setStyleSheet(u"background-color: rgb(66, 205, 255);")
+        self.btn3 = QPushButton(self.qglayout)
+        self.btn3.setObjectName(u"btn3")
+        self.btn3.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+        self.btn3.setAutoDefault(False)
+        self.btn3.setFlat(False)
 
-        self.gridLayout_4.addWidget(self.btn_not_equals, 6, 1, 1, 1)
+        self.gridLayout_4.addWidget(self.btn3, 9, 10, 1, 1)
 
         self.btn_exp = QPushButton(self.qglayout)
         self.btn_exp.setObjectName(u"btn_exp")
@@ -464,19 +605,31 @@ class Ui_Scientific(object):
 
         self.gridLayout_4.addWidget(self.btn_exp, 9, 6, 1, 1)
 
-        self.btn3 = QPushButton(self.qglayout)
-        self.btn3.setObjectName(u"btn3")
-        self.btn3.setStyleSheet(u"background-color: rgb(255, 255, 255);")
-        self.btn3.setAutoDefault(False)
-        self.btn3.setFlat(False)
+        self.btn_not_equals = QPushButton(self.qglayout)
+        self.btn_not_equals.setObjectName(u"btn_not_equals")
+        self.btn_not_equals.setStyleSheet(u"background-color: rgb(66, 205, 255);")
 
-        self.gridLayout_4.addWidget(self.btn3, 9, 10, 1, 1)
+        self.gridLayout_4.addWidget(self.btn_not_equals, 6, 1, 1, 1)
+
+        self.btn_abs = QPushButton(self.qglayout)
+        self.btn_abs.setObjectName(u"btn_abs")
+        self.btn_abs.setStyleSheet(u"background-color: rgb(223, 223, 0);")
+        self.btn_abs.setAutoDefault(False)
+        self.btn_abs.setFlat(False)
+
+        self.gridLayout_4.addWidget(self.btn_abs, 12, 1, 1, 1)
 
         self.btn_greater = QPushButton(self.qglayout)
         self.btn_greater.setObjectName(u"btn_greater")
         self.btn_greater.setStyleSheet(u"background-color: rgb(66, 205, 255);")
 
         self.gridLayout_4.addWidget(self.btn_greater, 8, 1, 1, 1)
+
+        self.btn_hypot = QPushButton(self.qglayout)
+        self.btn_hypot.setObjectName(u"btn_hypot")
+        self.btn_hypot.setStyleSheet(u"background-color: rgb(170, 170, 255);")
+
+        self.gridLayout_4.addWidget(self.btn_hypot, 13, 7, 1, 1)
 
         self.btn_pi = QPushButton(self.qglayout)
         self.btn_pi.setObjectName(u"btn_pi")
@@ -512,6 +665,7 @@ class Ui_Scientific(object):
 
         self.btn_ms = QPushButton(self.qglayout)
         self.btn_ms.setObjectName(u"btn_ms")
+        self.btn_ms.setStyleSheet(u"background-color: rgb(255, 179, 169)")
 
         self.gridLayout_4.addWidget(self.btn_ms, 0, 9, 1, 1)
 
@@ -531,14 +685,6 @@ class Ui_Scientific(object):
 
         self.gridLayout_4.addWidget(self.btn_gma, 11, 1, 1, 1)
 
-        self.btn_dot = QPushButton(self.qglayout)
-        self.btn_dot.setObjectName(u"btn_dot")
-        self.btn_dot.setStyleSheet(u"background-color: rgb(255, 170, 0);")
-        self.btn_dot.setAutoDefault(False)
-        self.btn_dot.setFlat(False)
-
-        self.gridLayout_4.addWidget(self.btn_dot, 10, 10, 1, 1)
-
         self.btn4 = QPushButton(self.qglayout)
         self.btn4.setObjectName(u"btn4")
         self.btn4.setStyleSheet(u"background-color: rgb(255, 255, 255);")
@@ -557,6 +703,7 @@ class Ui_Scientific(object):
 
         self.btn_m_show = QPushButton(self.qglayout)
         self.btn_m_show.setObjectName(u"btn_m_show")
+        self.btn_m_show.setStyleSheet(u"background-color: rgb(255, 169, 185);")
 
         self.gridLayout_4.addWidget(self.btn_m_show, 0, 10, 1, 1)
 
@@ -576,6 +723,12 @@ class Ui_Scientific(object):
 
         self.gridLayout_4.addWidget(self.btn_expm1, 10, 6, 1, 1)
 
+        self.btn_gcd = QPushButton(self.qglayout)
+        self.btn_gcd.setObjectName(u"btn_gcd")
+        self.btn_gcd.setStyleSheet(u"background-color: rgb(231, 201, 48)")
+
+        self.gridLayout_4.addWidget(self.btn_gcd, 12, 7, 1, 1)
+
         self.btn_minus = QPushButton(self.qglayout)
         self.btn_minus.setObjectName(u"btn_minus")
         self.btn_minus.setStyleSheet(u"background-color: rgb(170, 255, 255);")
@@ -586,6 +739,7 @@ class Ui_Scientific(object):
 
         self.btn_m_plus = QPushButton(self.qglayout)
         self.btn_m_plus.setObjectName(u"btn_m_plus")
+        self.btn_m_plus.setStyleSheet(u"background-color: rgb(255, 179, 169)")
 
         self.gridLayout_4.addWidget(self.btn_m_plus, 0, 7, 1, 1)
 
@@ -667,14 +821,6 @@ class Ui_Scientific(object):
 
         self.gridLayout_4.addWidget(self.btn_parenthesis, 6, 8, 1, 1)
 
-        self.btn0 = QPushButton(self.qglayout)
-        self.btn0.setObjectName(u"btn0")
-        self.btn0.setStyleSheet(u"background-color: rgb(255, 255, 255);")
-        self.btn0.setAutoDefault(False)
-        self.btn0.setFlat(False)
-
-        self.gridLayout_4.addWidget(self.btn0, 10, 9, 1, 1)
-
         self.btn_sqrt3 = QPushButton(self.qglayout)
         self.btn_sqrt3.setObjectName(u"btn_sqrt3")
         self.btn_sqrt3.setStyleSheet(u"background:limegreen;")
@@ -689,142 +835,6 @@ class Ui_Scientific(object):
 
         self.gridLayout_4.addWidget(self.btn_and, 6, 2, 1, 1)
 
-        self.btn_sinh = QPushButton(self.qglayout)
-        self.btn_sinh.setObjectName(u"btn_sinh")
-        self.btn_sinh.setStyleSheet(u"background-color: rgb(255, 250, 199);")
-        self.btn_sinh.setAutoDefault(False)
-        self.btn_sinh.setFlat(False)
-
-        self.gridLayout_4.addWidget(self.btn_sinh, 9, 3, 1, 1)
-
-        self.groupBox_2 = QGroupBox(self.qglayout)
-        self.groupBox_2.setObjectName(u"groupBox_2")
-        self.groupBox_2.setAlignment(Qt.AlignCenter)
-        self.horizontalLayout_3 = QHBoxLayout(self.groupBox_2)
-        self.horizontalLayout_3.setSpacing(0)
-        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.horizontalLayout_3.setContentsMargins(9, 0, -1, -1)
-        self.btn_rd_bin = QRadioButton(self.groupBox_2)
-        self.btn_rd_bin.setObjectName(u"btn_rd_bin")
-
-        self.horizontalLayout_3.addWidget(self.btn_rd_bin)
-
-        self.btn_rd_oct = QRadioButton(self.groupBox_2)
-        self.btn_rd_oct.setObjectName(u"btn_rd_oct")
-
-        self.horizontalLayout_3.addWidget(self.btn_rd_oct)
-
-        self.btn_rd_dec = QRadioButton(self.groupBox_2)
-        self.btn_rd_dec.setObjectName(u"btn_rd_dec")
-        self.btn_rd_dec.setChecked(True)
-
-        self.horizontalLayout_3.addWidget(self.btn_rd_dec)
-
-        self.btn_rd_hex = QRadioButton(self.groupBox_2)
-        self.btn_rd_hex.setObjectName(u"btn_rd_hex")
-
-        self.horizontalLayout_3.addWidget(self.btn_rd_hex)
-
-        self.btn_rd_fe = QRadioButton(self.groupBox_2)
-        self.btn_rd_fe.setObjectName(u"btn_rd_fe")
-
-        self.horizontalLayout_3.addWidget(self.btn_rd_fe)
-
-
-        self.gridLayout_4.addWidget(self.groupBox_2, 0, 0, 1, 5)
-
-        self.btn_trunc = QPushButton(self.qglayout)
-        self.btn_trunc.setObjectName(u"btn_trunc")
-        self.btn_trunc.setStyleSheet(u"background-color: rgb(223, 223, 0);")
-        self.btn_trunc.setAutoDefault(False)
-        self.btn_trunc.setFlat(False)
-
-        self.gridLayout_4.addWidget(self.btn_trunc, 12, 0, 1, 1)
-
-        self.btn_abs = QPushButton(self.qglayout)
-        self.btn_abs.setObjectName(u"btn_abs")
-        self.btn_abs.setStyleSheet(u"background-color: rgb(223, 223, 0);")
-        self.btn_abs.setAutoDefault(False)
-        self.btn_abs.setFlat(False)
-
-        self.gridLayout_4.addWidget(self.btn_abs, 12, 1, 1, 1)
-
-        self.btn_fabs = QPushButton(self.qglayout)
-        self.btn_fabs.setObjectName(u"btn_fabs")
-        self.btn_fabs.setStyleSheet(u"background-color: rgb(223, 223, 0);")
-
-        self.gridLayout_4.addWidget(self.btn_fabs, 12, 2, 1, 1)
-
-        self.btn_floor = QPushButton(self.qglayout)
-        self.btn_floor.setObjectName(u"btn_floor")
-        self.btn_floor.setStyleSheet(u"background-color: rgb(223, 223, 0);")
-        self.btn_floor.setAutoDefault(False)
-        self.btn_floor.setFlat(False)
-
-        self.gridLayout_4.addWidget(self.btn_floor, 12, 3, 1, 1)
-
-        self.btn_ceil = QPushButton(self.qglayout)
-        self.btn_ceil.setObjectName(u"btn_ceil")
-        self.btn_ceil.setStyleSheet(u"background-color: rgb(223, 223, 0);")
-        self.btn_ceil.setAutoDefault(False)
-        self.btn_ceil.setFlat(False)
-
-        self.gridLayout_4.addWidget(self.btn_ceil, 12, 4, 1, 1)
-
-        self.btn_round = QPushButton(self.qglayout)
-        self.btn_round.setObjectName(u"btn_round")
-        self.btn_round.setStyleSheet(u"background-color: rgb(223, 223, 0);")
-
-        self.gridLayout_4.addWidget(self.btn_round, 12, 5, 1, 1)
-
-        self.btn_rand = QPushButton(self.qglayout)
-        self.btn_rand.setObjectName(u"btn_rand")
-        self.btn_rand.setStyleSheet(u"background-color: rgb(0, 220, 106);")
-
-        self.gridLayout_4.addWidget(self.btn_rand, 6, 3, 1, 1)
-
-        self.btn_RAD = QPushButton(self.qglayout)
-        self.btn_RAD.setObjectName(u"btn_RAD")
-        self.btn_RAD.setToolTipDuration(3)
-        self.btn_RAD.setStyleSheet(u"")
-        self.btn_RAD.setAutoDefault(False)
-        self.btn_RAD.setFlat(False)
-
-        self.gridLayout_4.addWidget(self.btn_RAD, 7, 3, 1, 1)
-
-        self.btn_DEG = QPushButton(self.qglayout)
-        self.btn_DEG.setObjectName(u"btn_DEG")
-        self.btn_DEG.setToolTipDuration(3)
-        self.btn_DEG.setStyleSheet(u"")
-        self.btn_DEG.setAutoDefault(False)
-        self.btn_DEG.setFlat(False)
-
-        self.gridLayout_4.addWidget(self.btn_DEG, 8, 3, 1, 1)
-
-        self.btn_comb = QPushButton(self.qglayout)
-        self.btn_comb.setObjectName(u"btn_comb")
-        self.btn_comb.setStyleSheet(u"background-color: rgb(255, 199, 188);")
-
-        self.gridLayout_4.addWidget(self.btn_comb, 12, 6, 1, 1)
-
-        self.btn_min = QPushButton(self.qglayout)
-        self.btn_min.setObjectName(u"btn_min")
-        self.btn_min.setStyleSheet(u"background-color: rgb(170, 170, 255);")
-
-        self.gridLayout_4.addWidget(self.btn_min, 13, 0, 1, 1)
-
-        self.btn_gcd = QPushButton(self.qglayout)
-        self.btn_gcd.setObjectName(u"btn_gcd")
-        self.btn_gcd.setStyleSheet(u"background-color: rgb(255, 199, 188);")
-
-        self.gridLayout_4.addWidget(self.btn_gcd, 12, 7, 1, 1)
-
-        self.btn_max = QPushButton(self.qglayout)
-        self.btn_max.setObjectName(u"btn_max")
-        self.btn_max.setStyleSheet(u"background-color: rgb(170, 170, 255);")
-
-        self.gridLayout_4.addWidget(self.btn_max, 13, 1, 1, 1)
-
         self.btn_sum = QPushButton(self.qglayout)
         self.btn_sum.setObjectName(u"btn_sum")
         self.btn_sum.setStyleSheet(u"background-color: rgb(170, 170, 255);")
@@ -833,78 +843,87 @@ class Ui_Scientific(object):
 
         self.gridLayout_4.addWidget(self.btn_sum, 13, 2, 1, 1)
 
-        self.btn_lcm = QPushButton(self.qglayout)
-        self.btn_lcm.setObjectName(u"btn_lcm")
-        self.btn_lcm.setStyleSheet(u"background-color: rgb(255, 199, 188);")
+        self.btn_RAD = QPushButton(self.qglayout)
+        self.btn_RAD.setObjectName(u"btn_RAD")
+        self.btn_RAD.setToolTipDuration(3)
+        self.btn_RAD.setStyleSheet(u"background-color: rgb(255, 189, 250);")
+        self.btn_RAD.setAutoDefault(False)
+        self.btn_RAD.setFlat(False)
 
-        self.gridLayout_4.addWidget(self.btn_lcm, 12, 8, 1, 1)
+        self.gridLayout_4.addWidget(self.btn_RAD, 13, 9, 1, 1)
 
-        self.btn_frexp = QPushButton(self.qglayout)
-        self.btn_frexp.setObjectName(u"btn_frexp")
-        self.btn_frexp.setStyleSheet(u"background-color: rgb(255, 199, 188);")
+        self.btn_DEG = QPushButton(self.qglayout)
+        self.btn_DEG.setObjectName(u"btn_DEG")
+        self.btn_DEG.setToolTipDuration(3)
+        self.btn_DEG.setStyleSheet(u"background-color: rgb(255, 189, 250);")
+        self.btn_DEG.setAutoDefault(False)
+        self.btn_DEG.setFlat(False)
 
-        self.gridLayout_4.addWidget(self.btn_frexp, 12, 9, 1, 1)
+        self.gridLayout_4.addWidget(self.btn_DEG, 13, 10, 1, 1)
 
-        self.btn_prod = QPushButton(self.qglayout)
-        self.btn_prod.setObjectName(u"btn_prod")
-        self.btn_prod.setStyleSheet(u"background-color: rgb(170, 170, 255);")
+        self.btn_rand = QPushButton(self.qglayout)
+        self.btn_rand.setObjectName(u"btn_rand")
+        self.btn_rand.setStyleSheet(u"background-color: rgb(0, 220, 106);")
 
-        self.gridLayout_4.addWidget(self.btn_prod, 13, 3, 1, 1)
+        self.gridLayout_4.addWidget(self.btn_rand, 13, 11, 1, 1)
 
-        self.btn_ldexp = QPushButton(self.qglayout)
-        self.btn_ldexp.setObjectName(u"btn_ldexp")
-        self.btn_ldexp.setStyleSheet(u"background-color: rgb(255, 199, 188);")
+        self.btn0 = QPushButton(self.qglayout)
+        self.btn0.setObjectName(u"btn0")
+        self.btn0.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+        self.btn0.setAutoDefault(False)
+        self.btn0.setFlat(False)
 
-        self.gridLayout_4.addWidget(self.btn_ldexp, 12, 10, 1, 1)
+        self.gridLayout_4.addWidget(self.btn0, 10, 8, 1, 1)
 
-        self.btn_mean = QPushButton(self.qglayout)
-        self.btn_mean.setObjectName(u"btn_mean")
-        self.btn_mean.setStyleSheet(u"background-color: rgb(170, 170, 255);")
+        self.btn00 = QPushButton(self.qglayout)
+        self.btn00.setObjectName(u"btn00")
+        self.btn00.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+        self.btn00.setAutoDefault(False)
+        self.btn00.setFlat(False)
 
-        self.gridLayout_4.addWidget(self.btn_mean, 13, 4, 1, 1)
+        self.gridLayout_4.addWidget(self.btn00, 10, 9, 1, 1)
+
+        self.btn000 = QPushButton(self.qglayout)
+        self.btn000.setObjectName(u"btn000")
+        self.btn000.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+        self.btn000.setAutoDefault(False)
+        self.btn000.setFlat(False)
+
+        self.gridLayout_4.addWidget(self.btn000, 10, 10, 1, 1)
+
+        self.btn_dot = QPushButton(self.qglayout)
+        self.btn_dot.setObjectName(u"btn_dot")
+        self.btn_dot.setStyleSheet(u"background-color: rgb(255, 170, 0);")
+        self.btn_dot.setAutoDefault(False)
+        self.btn_dot.setFlat(False)
+
+        self.gridLayout_4.addWidget(self.btn_dot, 11, 9, 1, 1)
+
+        self.btn_inverse = QPushButton(self.qglayout)
+        self.btn_inverse.setObjectName(u"btn_inverse")
+        self.btn_inverse.setStyleSheet(u"background-color: rgb(255, 170, 0);")
+        self.btn_inverse.setAutoDefault(False)
+        self.btn_inverse.setFlat(False)
+
+        self.gridLayout_4.addWidget(self.btn_inverse, 11, 8, 1, 1)
+
+        self.btn_equal = QPushButton(self.qglayout)
+        self.btn_equal.setObjectName(u"btn_equal")
+        self.btn_equal.setStyleSheet(u"background-color: rgb(0, 255, 0);")
+
+        self.gridLayout_4.addWidget(self.btn_equal, 11, 10, 1, 2)
 
         self.btn_perm = QPushButton(self.qglayout)
         self.btn_perm.setObjectName(u"btn_perm")
-        self.btn_perm.setStyleSheet(u"background-color: rgb(255, 199, 188);")
+        self.btn_perm.setStyleSheet(u"background-color: rgb(231, 201, 48)")
 
         self.gridLayout_4.addWidget(self.btn_perm, 12, 11, 1, 1)
 
-        self.btn_medn = QPushButton(self.qglayout)
-        self.btn_medn.setObjectName(u"btn_medn")
-        self.btn_medn.setStyleSheet(u"background-color: rgb(170, 170, 255);")
+        self.btn_ldexp = QPushButton(self.qglayout)
+        self.btn_ldexp.setObjectName(u"btn_ldexp")
+        self.btn_ldexp.setStyleSheet(u"background-color: rgb(231, 201, 48)")
 
-        self.gridLayout_4.addWidget(self.btn_medn, 13, 5, 1, 1)
-
-        self.btn_mode = QPushButton(self.qglayout)
-        self.btn_mode.setObjectName(u"btn_mode")
-        self.btn_mode.setStyleSheet(u"background-color: rgb(170, 170, 255);")
-
-        self.gridLayout_4.addWidget(self.btn_mode, 13, 6, 1, 1)
-
-        self.btn_comma = QPushButton(self.qglayout)
-        self.btn_comma.setObjectName(u"btn_comma")
-        self.btn_comma.setEnabled(True)
-        self.btn_comma.setStyleSheet(u"background-color: rgb(170, 170, 127);")
-
-        self.gridLayout_4.addWidget(self.btn_comma, 13, 8, 1, 1)
-
-        self.btn_hypot = QPushButton(self.qglayout)
-        self.btn_hypot.setObjectName(u"btn_hypot")
-        self.btn_hypot.setStyleSheet(u"background-color: rgb(170, 170, 255);")
-
-        self.gridLayout_4.addWidget(self.btn_hypot, 13, 7, 1, 1)
-
-        self.btn_less_than = QPushButton(self.qglayout)
-        self.btn_less_than.setObjectName(u"btn_less_than")
-        self.btn_less_than.setStyleSheet(u"background-color: rgb(66, 205, 255);")
-
-        self.gridLayout_4.addWidget(self.btn_less_than, 7, 0, 1, 1)
-
-        self.btn_greater_than = QPushButton(self.qglayout)
-        self.btn_greater_than.setObjectName(u"btn_greater_than")
-        self.btn_greater_than.setStyleSheet(u"background-color: rgb(66, 205, 255);")
-
-        self.gridLayout_4.addWidget(self.btn_greater_than, 7, 1, 1, 1)
+        self.gridLayout_4.addWidget(self.btn_ldexp, 12, 10, 1, 1)
 
 
         self.verticalLayout_2.addWidget(self.qglayout)
@@ -951,102 +970,126 @@ class Ui_Scientific(object):
 
         self.st_controls = QStackedWidget(self.widget)
         self.st_controls.setObjectName(u"st_controls")
-        self.st_controls.setGeometry(QRect(-10, 122, 21, 341))
+        self.st_controls.setGeometry(QRect(-10, 122, 21, 391))
         self.page_4 = QWidget()
         self.page_4.setObjectName(u"page_4")
-        self.gridLayout = QGridLayout(self.page_4)
-        self.gridLayout.setObjectName(u"gridLayout")
-        self.list_historial = QListWidget(self.page_4)
-        self.list_historial.setObjectName(u"list_historial")
-
-        self.gridLayout.addWidget(self.list_historial, 1, 0, 1, 1)
-
+        self.horizontalLayout_5 = QHBoxLayout(self.page_4)
+        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
         self.widget_2 = QWidget(self.page_4)
         self.widget_2.setObjectName(u"widget_2")
-        self.horizontalLayout = QHBoxLayout(self.widget_2)
-        self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.radioButton = QRadioButton(self.widget_2)
-        self.radioButton.setObjectName(u"radioButton")
-        self.radioButton.setChecked(False)
+        self.verticalLayout_3 = QVBoxLayout(self.widget_2)
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.btn_showFun1 = QPushButton(self.widget_2)
+        self.btn_showFun1.setObjectName(u"btn_showFun1")
+        icon13 = QIcon()
+        icon13.addFile(u":/icons/undo.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.btn_showFun1.setIcon(icon13)
 
-        self.horizontalLayout.addWidget(self.radioButton)
+        self.verticalLayout_3.addWidget(self.btn_showFun1)
 
         self.radioButton_2 = QRadioButton(self.widget_2)
         self.radioButton_2.setObjectName(u"radioButton_2")
         self.radioButton_2.setChecked(True)
 
-        self.horizontalLayout.addWidget(self.radioButton_2)
+        self.verticalLayout_3.addWidget(self.radioButton_2)
 
-        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.radioButton = QRadioButton(self.widget_2)
+        self.radioButton.setObjectName(u"radioButton")
+        self.radioButton.setChecked(False)
 
-        self.horizontalLayout.addItem(self.horizontalSpacer)
+        self.verticalLayout_3.addWidget(self.radioButton)
 
         self.btn_del_historial = QPushButton(self.widget_2)
         self.btn_del_historial.setObjectName(u"btn_del_historial")
-        icon13 = QIcon()
-        icon13.addFile(u":/icons/trash.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.btn_del_historial.setIcon(icon13)
-
-        self.horizontalLayout.addWidget(self.btn_del_historial)
-
-        self.btn_showFun1 = QPushButton(self.widget_2)
-        self.btn_showFun1.setObjectName(u"btn_showFun1")
         icon14 = QIcon()
-        icon14.addFile(u":/icons/undo.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.btn_showFun1.setIcon(icon14)
+        icon14.addFile(u":/icons/trash.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.btn_del_historial.setIcon(icon14)
 
-        self.horizontalLayout.addWidget(self.btn_showFun1)
+        self.verticalLayout_3.addWidget(self.btn_del_historial)
 
 
-        self.gridLayout.addWidget(self.widget_2, 0, 0, 1, 1)
+        self.horizontalLayout_5.addWidget(self.widget_2)
+
+        self.list_historial = QListWidget(self.page_4)
+        self.list_historial.setObjectName(u"list_historial")
+
+        self.horizontalLayout_5.addWidget(self.list_historial)
 
         self.st_controls.addWidget(self.page_4)
         self.page = QWidget()
         self.page.setObjectName(u"page")
-        self.gridLayout_2 = QGridLayout(self.page)
-        self.gridLayout_2.setObjectName(u"gridLayout_2")
+        self.horizontalLayout = QHBoxLayout(self.page)
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.widget_5 = QWidget(self.page)
         self.widget_5.setObjectName(u"widget_5")
         self.horizontalLayout_4 = QHBoxLayout(self.widget_5)
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
-        self.btn_mr_prod = QPushButton(self.widget_5)
-        self.btn_mr_prod.setObjectName(u"btn_mr_prod")
+        self.groupBox_3 = QGroupBox(self.widget_5)
+        self.groupBox_3.setObjectName(u"groupBox_3")
+        self.verticalLayout_4 = QVBoxLayout(self.groupBox_3)
+        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        self.btn_showFun2 = QPushButton(self.groupBox_3)
+        self.btn_showFun2.setObjectName(u"btn_showFun2")
+        self.btn_showFun2.setIcon(icon13)
 
-        self.horizontalLayout_4.addWidget(self.btn_mr_prod)
+        self.verticalLayout_4.addWidget(self.btn_showFun2)
 
-        self.btn_mr_sum = QPushButton(self.widget_5)
+        self.btn_mr_min = QPushButton(self.groupBox_3)
+        self.btn_mr_min.setObjectName(u"btn_mr_min")
+
+        self.verticalLayout_4.addWidget(self.btn_mr_min)
+
+        self.btn_mr_max = QPushButton(self.groupBox_3)
+        self.btn_mr_max.setObjectName(u"btn_mr_max")
+
+        self.verticalLayout_4.addWidget(self.btn_mr_max)
+
+        self.btn_mr_sum = QPushButton(self.groupBox_3)
         self.btn_mr_sum.setObjectName(u"btn_mr_sum")
 
-        self.horizontalLayout_4.addWidget(self.btn_mr_sum)
+        self.verticalLayout_4.addWidget(self.btn_mr_sum)
 
-        self.btn_mds = QPushButton(self.widget_5)
-        self.btn_mds.setObjectName(u"btn_mds")
+        self.btn_mr_prod = QPushButton(self.groupBox_3)
+        self.btn_mr_prod.setObjectName(u"btn_mr_prod")
 
-        self.horizontalLayout_4.addWidget(self.btn_mds)
+        self.verticalLayout_4.addWidget(self.btn_mr_prod)
 
-        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.btn_mr_mean = QPushButton(self.groupBox_3)
+        self.btn_mr_mean.setObjectName(u"btn_mr_mean")
 
-        self.horizontalLayout_4.addItem(self.horizontalSpacer_3)
+        self.verticalLayout_4.addWidget(self.btn_mr_mean)
 
-        self.btn_showFun2 = QPushButton(self.widget_5)
-        self.btn_showFun2.setObjectName(u"btn_showFun2")
-        self.btn_showFun2.setIcon(icon14)
+        self.btn_mr_median = QPushButton(self.groupBox_3)
+        self.btn_mr_median.setObjectName(u"btn_mr_median")
 
-        self.horizontalLayout_4.addWidget(self.btn_showFun2)
+        self.verticalLayout_4.addWidget(self.btn_mr_median)
+
+        self.btn_mr_mode = QPushButton(self.groupBox_3)
+        self.btn_mr_mode.setObjectName(u"btn_mr_mode")
+
+        self.verticalLayout_4.addWidget(self.btn_mr_mode)
+
+        self.btn_mr_clear = QPushButton(self.groupBox_3)
+        self.btn_mr_clear.setObjectName(u"btn_mr_clear")
+
+        self.verticalLayout_4.addWidget(self.btn_mr_clear)
 
 
-        self.gridLayout_2.addWidget(self.widget_5, 0, 0, 1, 1)
+        self.horizontalLayout_4.addWidget(self.groupBox_3)
 
-        self.list_memory = QListWidget(self.page)
+        self.list_memory = QListWidget(self.widget_5)
         self.list_memory.setObjectName(u"list_memory")
 
-        self.gridLayout_2.addWidget(self.list_memory, 1, 0, 1, 1)
+        self.horizontalLayout_4.addWidget(self.list_memory)
+
+
+        self.horizontalLayout.addWidget(self.widget_5)
 
         self.st_controls.addWidget(self.page)
         Scientific.setCentralWidget(self.widget)
         self.menubar = QMenuBar(Scientific)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 646, 22))
+        self.menubar.setGeometry(QRect(0, 0, 643, 22))
         self.menuFile = QMenu(self.menubar)
         self.menuFile.setObjectName(u"menuFile")
         self.menuHelp = QMenu(self.menubar)
@@ -1088,11 +1131,12 @@ class Ui_Scientific(object):
         self.btn_del_historial.clicked.connect(self.list_historial.clear)
         self.btn_mc.clicked.connect(self.list_memory.clear)
 
+        self.btn_sinh.setDefault(False)
         self.btn_sqrtN.setDefault(False)
-        self.btn000.setDefault(False)
         self.btn_ln.setDefault(False)
         self.btn_divide.setDefault(False)
         self.btn_atanh.setDefault(False)
+        self.btn_trunc.setDefault(False)
         self.btn_log.setDefault(False)
         self.btn_cos.setDefault(False)
         self.btn_asinh.setDefault(False)
@@ -1100,33 +1144,33 @@ class Ui_Scientific(object):
         self.btn_10powX.setDefault(False)
         self.btn2.setDefault(False)
         self.btn_cosh.setDefault(False)
+        self.btn_ceil.setDefault(False)
         self.btn_cuberoot.setDefault(False)
         self.btn_sin.setDefault(False)
         self.btn_historial_show.setDefault(False)
         self.btn_2X.setDefault(False)
+        self.btn_floor.setDefault(False)
         self.btn_c.setDefault(False)
         self.btn_sqrt.setDefault(False)
         self.btn_back.setDefault(False)
         self.btn_mod.setDefault(False)
         self.btn_mult.setDefault(False)
-        self.btn00.setDefault(False)
         self.btn_percent.setDefault(False)
         self.btn_lgma.setDefault(False)
         self.btn6.setDefault(False)
         self.btn8.setDefault(False)
         self.btn_ce.setDefault(False)
         self.btn_factorial.setDefault(False)
-        self.btn_inverse.setDefault(False)
         self.btn7.setDefault(False)
-        self.btn_exp.setDefault(False)
         self.btn3.setDefault(False)
+        self.btn_exp.setDefault(False)
+        self.btn_abs.setDefault(False)
         self.btn_pi.setDefault(False)
         self.btn_atan.setDefault(False)
         self.btn_sqrtroot.setDefault(False)
         self.btn_acos.setDefault(False)
         self.btn_plus.setDefault(False)
         self.btn_gma.setDefault(False)
-        self.btn_dot.setDefault(False)
         self.btn4.setDefault(False)
         self.btn_log2.setDefault(False)
         self.btn5.setDefault(False)
@@ -1141,17 +1185,16 @@ class Ui_Scientific(object):
         self.btn_asin.setDefault(False)
         self.btn_1dividedX.setDefault(False)
         self.btn_parenthesis.setDefault(False)
-        self.btn0.setDefault(False)
         self.btn_sqrt3.setDefault(False)
-        self.btn_sinh.setDefault(False)
-        self.btn_trunc.setDefault(False)
-        self.btn_abs.setDefault(False)
-        self.btn_floor.setDefault(False)
-        self.btn_ceil.setDefault(False)
+        self.btn_sum.setDefault(False)
         self.btn_RAD.setDefault(False)
         self.btn_DEG.setDefault(False)
-        self.btn_sum.setDefault(False)
-        self.st_controls.setCurrentIndex(0)
+        self.btn0.setDefault(False)
+        self.btn00.setDefault(False)
+        self.btn000.setDefault(False)
+        self.btn_dot.setDefault(False)
+        self.btn_inverse.setDefault(False)
+        self.st_controls.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(Scientific)
@@ -1173,19 +1216,32 @@ class Ui_Scientific(object):
         self.label_mr.setText(QCoreApplication.translate("Scientific", u"0", None))
         self.qglayout.setTitle("")
 #if QT_CONFIG(tooltip)
+        self.btn_sinh.setToolTip(QCoreApplication.translate("Scientific", u"Returns the arc sine of a number", None))
+#endif // QT_CONFIG(tooltip)
+        self.btn_sinh.setText(QCoreApplication.translate("Scientific", u"sinh", None))
+#if QT_CONFIG(tooltip)
         self.btn_atan2.setToolTip(QCoreApplication.translate("Scientific", u"<html><head/><body><p>Return the arc tangent of y/x in radians </p><p><span style=\" color:#0000ff;\">atan2(y, x)</span></p></body></html>", None))
 #endif // QT_CONFIG(tooltip)
         self.btn_atan2.setStyleSheet(QCoreApplication.translate("Scientific", u"background-color: rgb(255, 250, 199);", None))
         self.btn_atan2.setText(QCoreApplication.translate("Scientific", u"atan2", None))
         self.btn_sqrtN.setText(QCoreApplication.translate("Scientific", u"x\u207f", None))
-        self.btn000.setText(QCoreApplication.translate("Scientific", u"000", None))
         self.btn_ln.setText(QCoreApplication.translate("Scientific", u"ln", None))
         self.btn_log1p.setText(QCoreApplication.translate("Scientific", u"log1p", None))
         self.btn_divide.setText(QCoreApplication.translate("Scientific", u"/", None))
 #if QT_CONFIG(tooltip)
+        self.btn_prod.setToolTip(QCoreApplication.translate("Scientific", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Verdana','sans-serif'; font-size:8pt; font-style:italic; color:#000000; background-color:#ffffff;\">Return the product of all numbers in memory.</span></p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+        self.btn_prod.setText(QCoreApplication.translate("Scientific", u"prod", None))
+#if QT_CONFIG(tooltip)
         self.btn_atanh.setToolTip(QCoreApplication.translate("Scientific", u"Returns the inverse hyperbolic cosine of a number", None))
 #endif // QT_CONFIG(tooltip)
         self.btn_atanh.setText(QCoreApplication.translate("Scientific", u"tanh\u207b\u00b9", None))
+        self.btn_trunc.setText(QCoreApplication.translate("Scientific", u"trunc", None))
+        self.btn_mean.setText(QCoreApplication.translate("Scientific", u"mean", None))
         self.btn_log.setText(QCoreApplication.translate("Scientific", u"log", None))
 #if QT_CONFIG(tooltip)
         self.btn_cos.setToolTip(QCoreApplication.translate("Scientific", u"Returns the cosine of a number", None))
@@ -1195,6 +1251,7 @@ class Ui_Scientific(object):
         self.btn_asinh.setToolTip(QCoreApplication.translate("Scientific", u"<html><head/><body><p>The atanh() method returns the inverse hyperbolic tangent of a number. </p><p>Note: The parameter passed in atanh() must lie between -0.99 to 0.99. </p><p><span style=\" color:#000000;\">example:</span><span style=\" color:#0000ff;\"> tan(0.25)</span></p></body></html>", None))
 #endif // QT_CONFIG(tooltip)
         self.btn_asinh.setText(QCoreApplication.translate("Scientific", u"sinh\u207b\u00b9", None))
+        self.btn_comma.setText(QCoreApplication.translate("Scientific", u",", None))
         self.btn_mr.setText(QCoreApplication.translate("Scientific", u"MR", None))
         self.btn1.setText(QCoreApplication.translate("Scientific", u"1", None))
         self.btn_10powX.setText(QCoreApplication.translate("Scientific", u"10\u207f", None))
@@ -1207,39 +1264,79 @@ class Ui_Scientific(object):
         self.btn_cosh.setToolTip(QCoreApplication.translate("Scientific", u"Returns the arc cosine of a number", None))
 #endif // QT_CONFIG(tooltip)
         self.btn_cosh.setText(QCoreApplication.translate("Scientific", u"cosh", None))
+#if QT_CONFIG(tooltip)
+        self.btn_ceil.setToolTip(QCoreApplication.translate("Scientific", u"Rounds a number up to the nearest integer", None))
+#endif // QT_CONFIG(tooltip)
+        self.btn_ceil.setText(QCoreApplication.translate("Scientific", u"ceil", None))
         self.btn_cuberoot.setText(QCoreApplication.translate("Scientific", u"\u1d4c\u221ax", None))
+        self.btn_round.setText(QCoreApplication.translate("Scientific", u"round", None))
         self.btn_sin.setText(QCoreApplication.translate("Scientific", u"sin", None))
+        self.btn_mode.setText(QCoreApplication.translate("Scientific", u"mode", None))
+#if QT_CONFIG(tooltip)
+        self.btn_fabs.setToolTip(QCoreApplication.translate("Scientific", u"Returns the absolute value of a number as a float", None))
+#endif // QT_CONFIG(tooltip)
+        self.btn_fabs.setText(QCoreApplication.translate("Scientific", u"fabs", None))
         self.btn_historial_show.setText("")
         self.btn_2X.setText(QCoreApplication.translate("Scientific", u"2\u207f", None))
+#if QT_CONFIG(tooltip)
+        self.btn_floor.setToolTip(QCoreApplication.translate("Scientific", u"Rounds a number down to the nearest integer", None))
+#endif // QT_CONFIG(tooltip)
+        self.btn_floor.setText(QCoreApplication.translate("Scientific", u"floor", None))
+        self.btn_min.setText(QCoreApplication.translate("Scientific", u"min", None))
         self.btn_c.setText(QCoreApplication.translate("Scientific", u"C", None))
+        self.btn_frexp.setText(QCoreApplication.translate("Scientific", u"frexp", None))
+        self.btn_greater_than.setText(QCoreApplication.translate("Scientific", u"\u2267", None))
         self.btn_sqrt.setText(QCoreApplication.translate("Scientific", u"x\u00b2", None))
         self.btn_back.setText("")
         self.btn_mod.setText(QCoreApplication.translate("Scientific", u"mod", None))
+        self.btn_medn.setText(QCoreApplication.translate("Scientific", u"medn", None))
         self.btn_mult.setText(QCoreApplication.translate("Scientific", u"*", None))
+        self.btn_lcm.setText(QCoreApplication.translate("Scientific", u"lcm", None))
         self.btn_m_minus.setText(QCoreApplication.translate("Scientific", u"M-", None))
-        self.btn00.setText(QCoreApplication.translate("Scientific", u"00", None))
+        self.btn_max.setText(QCoreApplication.translate("Scientific", u"max", None))
         self.btn_less.setText(QCoreApplication.translate("Scientific", u"<", None))
         self.btn_percent.setText(QCoreApplication.translate("Scientific", u"%", None))
         self.btn_lgma.setText(QCoreApplication.translate("Scientific", u"lgma", None))
         self.btn6.setText(QCoreApplication.translate("Scientific", u"6", None))
-        self.btn_equal.setText(QCoreApplication.translate("Scientific", u"=", None))
+        self.groupBox_2.setTitle("")
+        self.btn_rd_bin.setText(QCoreApplication.translate("Scientific", u"BIN", None))
+        self.btn_rd_oct.setText(QCoreApplication.translate("Scientific", u"OCT", None))
+        self.btn_rd_dec.setText(QCoreApplication.translate("Scientific", u"DEC", None))
+        self.btn_rd_hex.setText(QCoreApplication.translate("Scientific", u"HEX", None))
+        self.btn_rd_fe.setText(QCoreApplication.translate("Scientific", u"F-E", None))
+        self.btn_comb.setText(QCoreApplication.translate("Scientific", u"comb", None))
+        self.btn_mc.setStyleSheet(QCoreApplication.translate("Scientific", u"background-color: rgb(255, 0, 0);\n"
+"color: rgb(255, 255, 255);\n"
+"", None))
         self.btn_mc.setText(QCoreApplication.translate("Scientific", u"MC", None))
         self.btn8.setText(QCoreApplication.translate("Scientific", u"8", None))
         self.btn_ce.setText(QCoreApplication.translate("Scientific", u"CE", None))
         self.btn_or.setText(QCoreApplication.translate("Scientific", u"or", None))
+        self.btn_less_than.setText(QCoreApplication.translate("Scientific", u"\u2266", None))
 #if QT_CONFIG(tooltip)
         self.btn_factorial.setToolTip(QCoreApplication.translate("Scientific", u"Returns the factorial of a number", None))
 #endif // QT_CONFIG(tooltip)
         self.btn_factorial.setText(QCoreApplication.translate("Scientific", u"n!", None))
-        self.btn_inverse.setText(QCoreApplication.translate("Scientific", u"+/-", None))
         self.btn7.setText(QCoreApplication.translate("Scientific", u"7", None))
-        self.btn_not_equals.setText(QCoreApplication.translate("Scientific", u"\u2260", None))
+        self.btn3.setText(QCoreApplication.translate("Scientific", u"3", None))
 #if QT_CONFIG(tooltip)
         self.btn_exp.setToolTip(QCoreApplication.translate("Scientific", u"Returns E raised to the power of x", None))
 #endif // QT_CONFIG(tooltip)
         self.btn_exp.setText(QCoreApplication.translate("Scientific", u"exp", None))
-        self.btn3.setText(QCoreApplication.translate("Scientific", u"3", None))
+        self.btn_not_equals.setText(QCoreApplication.translate("Scientific", u"\u2260", None))
+#if QT_CONFIG(tooltip)
+        self.btn_abs.setToolTip(QCoreApplication.translate("Scientific", u"<html><head/><body><p>Abs: Absolute value</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+        self.btn_abs.setText(QCoreApplication.translate("Scientific", u"abs", None))
         self.btn_greater.setText(QCoreApplication.translate("Scientific", u">", None))
+#if QT_CONFIG(tooltip)
+        self.btn_hypot.setToolTip(QCoreApplication.translate("Scientific", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Verdana','sans-serif'; font-size:8pt; font-style:italic; color:#000000; background-color:#ffffff;\">Return the product of all numbers in memory.</span></p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+        self.btn_hypot.setText(QCoreApplication.translate("Scientific", u"hypot", None))
         self.btn_pi.setText(QCoreApplication.translate("Scientific", u"\u03c0", None))
 #if QT_CONFIG(tooltip)
         self.btn_atan.setToolTip(QCoreApplication.translate("Scientific", u"Returns the inverse hyperbolic tangent of a number", None))
@@ -1256,7 +1353,6 @@ class Ui_Scientific(object):
         self.btn_gma.setToolTip(QCoreApplication.translate("Scientific", u"Return the gamma function for different numbers", None))
 #endif // QT_CONFIG(tooltip)
         self.btn_gma.setText(QCoreApplication.translate("Scientific", u"gma", None))
-        self.btn_dot.setText(QCoreApplication.translate("Scientific", u".", None))
         self.btn4.setText(QCoreApplication.translate("Scientific", u"4", None))
         self.btn_log2.setText(QCoreApplication.translate("Scientific", u"log2", None))
         self.btn_m_show.setText(QCoreApplication.translate("Scientific", u"\u25c0 M \u25b6", None))
@@ -1265,6 +1361,7 @@ class Ui_Scientific(object):
         self.btn_expm1.setToolTip(QCoreApplication.translate("Scientific", u"Returns Ex - 1", None))
 #endif // QT_CONFIG(tooltip)
         self.btn_expm1.setText(QCoreApplication.translate("Scientific", u"expm1", None))
+        self.btn_gcd.setText(QCoreApplication.translate("Scientific", u"gcd", None))
         self.btn_minus.setText(QCoreApplication.translate("Scientific", u"-", None))
         self.btn_m_plus.setText(QCoreApplication.translate("Scientific", u"M+", None))
         self.btn_tan.setText(QCoreApplication.translate("Scientific", u"tan", None))
@@ -1283,41 +1380,9 @@ class Ui_Scientific(object):
         self.btn_asin.setText(QCoreApplication.translate("Scientific", u"sin\u207b\u00b9", None))
         self.btn_1dividedX.setText(QCoreApplication.translate("Scientific", u"\u00b9/\u2093", None))
         self.btn_parenthesis.setText(QCoreApplication.translate("Scientific", u"( )", None))
-        self.btn0.setText(QCoreApplication.translate("Scientific", u"0", None))
         self.btn_sqrt3.setText(QCoreApplication.translate("Scientific", u"x\u1d4c", None))
         self.btn_and.setText(QCoreApplication.translate("Scientific", u"and", None))
-#if QT_CONFIG(tooltip)
-        self.btn_sinh.setToolTip(QCoreApplication.translate("Scientific", u"Returns the arc sine of a number", None))
-#endif // QT_CONFIG(tooltip)
-        self.btn_sinh.setText(QCoreApplication.translate("Scientific", u"sinh", None))
-        self.groupBox_2.setTitle(QCoreApplication.translate("Scientific", u"Numeric System", None))
-        self.btn_rd_bin.setText(QCoreApplication.translate("Scientific", u"BIN", None))
-        self.btn_rd_oct.setText(QCoreApplication.translate("Scientific", u"OCT", None))
-        self.btn_rd_dec.setText(QCoreApplication.translate("Scientific", u"DEC", None))
-        self.btn_rd_hex.setText(QCoreApplication.translate("Scientific", u"HEX", None))
-        self.btn_rd_fe.setText(QCoreApplication.translate("Scientific", u"F-E", None))
-        self.btn_trunc.setText(QCoreApplication.translate("Scientific", u"trunc", None))
-#if QT_CONFIG(tooltip)
-        self.btn_abs.setToolTip(QCoreApplication.translate("Scientific", u"<html><head/><body><p>Abs: Absolute value</p></body></html>", None))
-#endif // QT_CONFIG(tooltip)
-        self.btn_abs.setText(QCoreApplication.translate("Scientific", u"abs", None))
-#if QT_CONFIG(tooltip)
-        self.btn_fabs.setToolTip(QCoreApplication.translate("Scientific", u"Returns the absolute value of a number as a float", None))
-#endif // QT_CONFIG(tooltip)
-        self.btn_fabs.setText(QCoreApplication.translate("Scientific", u"fabs", None))
-#if QT_CONFIG(tooltip)
-        self.btn_floor.setToolTip(QCoreApplication.translate("Scientific", u"Rounds a number down to the nearest integer", None))
-#endif // QT_CONFIG(tooltip)
-        self.btn_floor.setText(QCoreApplication.translate("Scientific", u"floor", None))
-#if QT_CONFIG(tooltip)
-        self.btn_ceil.setToolTip(QCoreApplication.translate("Scientific", u"Rounds a number up to the nearest integer", None))
-#endif // QT_CONFIG(tooltip)
-        self.btn_ceil.setText(QCoreApplication.translate("Scientific", u"ceil", None))
-        self.btn_round.setText(QCoreApplication.translate("Scientific", u"round", None))
-#if QT_CONFIG(tooltip)
-        self.btn_rand.setToolTip(QCoreApplication.translate("Scientific", u"<html><head/><body><p>Return a random number between 0 and 1</p></body></html>", None))
-#endif // QT_CONFIG(tooltip)
-        self.btn_rand.setText(QCoreApplication.translate("Scientific", u"RAND", None))
+        self.btn_sum.setText(QCoreApplication.translate("Scientific", u"sum", None))
 #if QT_CONFIG(tooltip)
         self.btn_RAD.setToolTip(QCoreApplication.translate("Scientific", u"Radian", None))
 #endif // QT_CONFIG(tooltip)
@@ -1329,40 +1394,21 @@ class Ui_Scientific(object):
         self.btn_DEG.setWhatsThis(QCoreApplication.translate("Scientific", u"Converts an angle from radians to degrees", None))
 #endif // QT_CONFIG(whatsthis)
         self.btn_DEG.setText(QCoreApplication.translate("Scientific", u"DEG", None))
-        self.btn_comb.setText(QCoreApplication.translate("Scientific", u"comb", None))
-        self.btn_min.setText(QCoreApplication.translate("Scientific", u"min", None))
-        self.btn_gcd.setText(QCoreApplication.translate("Scientific", u"gcd", None))
-        self.btn_max.setText(QCoreApplication.translate("Scientific", u"max", None))
-        self.btn_sum.setText(QCoreApplication.translate("Scientific", u"sum", None))
-        self.btn_lcm.setText(QCoreApplication.translate("Scientific", u"lcm", None))
-        self.btn_frexp.setText(QCoreApplication.translate("Scientific", u"frexp", None))
 #if QT_CONFIG(tooltip)
-        self.btn_prod.setToolTip(QCoreApplication.translate("Scientific", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Verdana','sans-serif'; font-size:8pt; font-style:italic; color:#000000; background-color:#ffffff;\">Return the product of all numbers in memory.</span></p></body></html>", None))
+        self.btn_rand.setToolTip(QCoreApplication.translate("Scientific", u"<html><head/><body><p>Return a random number between 0 and 1</p></body></html>", None))
 #endif // QT_CONFIG(tooltip)
-        self.btn_prod.setText(QCoreApplication.translate("Scientific", u"prod", None))
+        self.btn_rand.setText(QCoreApplication.translate("Scientific", u"rand", None))
+        self.btn0.setText(QCoreApplication.translate("Scientific", u"0", None))
+        self.btn00.setText(QCoreApplication.translate("Scientific", u"00", None))
+        self.btn000.setText(QCoreApplication.translate("Scientific", u"000", None))
+        self.btn_dot.setText(QCoreApplication.translate("Scientific", u".", None))
+        self.btn_inverse.setText(QCoreApplication.translate("Scientific", u"+/-", None))
+        self.btn_equal.setText(QCoreApplication.translate("Scientific", u"=", None))
+        self.btn_perm.setText(QCoreApplication.translate("Scientific", u"perm", None))
 #if QT_CONFIG(tooltip)
         self.btn_ldexp.setToolTip(QCoreApplication.translate("Scientific", u"<html><head/><body><p>The ldexp() method returns x * (2**i) of the given numbers x and i, which is the inverse of frexp().</p><p> Syntax: <span style=\" color:#0000ff;\">ldexp(x, i)</span></p></body></html>", None))
 #endif // QT_CONFIG(tooltip)
         self.btn_ldexp.setText(QCoreApplication.translate("Scientific", u"ldexp", None))
-        self.btn_mean.setText(QCoreApplication.translate("Scientific", u"mean", None))
-        self.btn_perm.setText(QCoreApplication.translate("Scientific", u"perm", None))
-        self.btn_medn.setText(QCoreApplication.translate("Scientific", u"medn", None))
-        self.btn_mode.setText(QCoreApplication.translate("Scientific", u"mode", None))
-        self.btn_comma.setText(QCoreApplication.translate("Scientific", u",", None))
-#if QT_CONFIG(tooltip)
-        self.btn_hypot.setToolTip(QCoreApplication.translate("Scientific", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Verdana','sans-serif'; font-size:8pt; font-style:italic; color:#000000; background-color:#ffffff;\">Return the product of all numbers in memory.</span></p></body></html>", None))
-#endif // QT_CONFIG(tooltip)
-        self.btn_hypot.setText(QCoreApplication.translate("Scientific", u"hypot", None))
-        self.btn_less_than.setText(QCoreApplication.translate("Scientific", u"\u2266", None))
-        self.btn_greater_than.setText(QCoreApplication.translate("Scientific", u"\u2267", None))
         self.groupBox.setTitle(QCoreApplication.translate("Scientific", u"Round Result", None))
         self.btn_rad_dec.setText(QCoreApplication.translate("Scientific", u"Dec", None))
         self.btn_rad_abs.setText(QCoreApplication.translate("Scientific", u"abs", None))
@@ -1371,25 +1417,31 @@ class Ui_Scientific(object):
         self.btn_rad_ceil.setText(QCoreApplication.translate("Scientific", u"ceil", None))
         self.btn_rad_trunc.setText(QCoreApplication.translate("Scientific", u"trunc", None))
 #if QT_CONFIG(tooltip)
-        self.radioButton.setToolTip(QCoreApplication.translate("Scientific", u"<html><head/><body><p>Replace text</p></body></html>", None))
+        self.btn_showFun1.setToolTip(QCoreApplication.translate("Scientific", u"<html><head/><body><p>Show controls</p></body></html>", None))
 #endif // QT_CONFIG(tooltip)
-        self.radioButton.setText(QCoreApplication.translate("Scientific", u"Replace", None))
+        self.btn_showFun1.setText("")
 #if QT_CONFIG(tooltip)
         self.radioButton_2.setToolTip(QCoreApplication.translate("Scientific", u"<html><head/><body><p>Append text</p></body></html>", None))
 #endif // QT_CONFIG(tooltip)
         self.radioButton_2.setText(QCoreApplication.translate("Scientific", u"Append", None))
 #if QT_CONFIG(tooltip)
+        self.radioButton.setToolTip(QCoreApplication.translate("Scientific", u"<html><head/><body><p>Replace text</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+        self.radioButton.setText(QCoreApplication.translate("Scientific", u"Replace", None))
+#if QT_CONFIG(tooltip)
         self.btn_del_historial.setToolTip(QCoreApplication.translate("Scientific", u"<html><head/><body><p>Clear history</p></body></html>", None))
 #endif // QT_CONFIG(tooltip)
         self.btn_del_historial.setText("")
+        self.groupBox_3.setTitle(QCoreApplication.translate("Scientific", u"GroupBox", None))
 #if QT_CONFIG(tooltip)
-        self.btn_showFun1.setToolTip(QCoreApplication.translate("Scientific", u"<html><head/><body><p>Show controls</p></body></html>", None))
+        self.btn_showFun2.setToolTip(QCoreApplication.translate("Scientific", u"<html><head/><body><p>Hide the memory history</p></body></html>", None))
 #endif // QT_CONFIG(tooltip)
-        self.btn_showFun1.setText("")
+        self.btn_showFun2.setText("")
 #if QT_CONFIG(tooltip)
-        self.btn_mr_prod.setToolTip(QCoreApplication.translate("Scientific", u"<html><head/><body><p><span style=\" font-family:'Consolas','Menlo','courier new','monospace'; font-size:8pt; color:#000000; background-color:#ffffff;\">Returns the function prod with all the values in memory</span></p></body></html>", None))
+        self.btn_mr_min.setToolTip(QCoreApplication.translate("Scientific", u"Delete from memory the selected values", None))
 #endif // QT_CONFIG(tooltip)
-        self.btn_mr_prod.setText(QCoreApplication.translate("Scientific", u"MProd", None))
+        self.btn_mr_min.setText(QCoreApplication.translate("Scientific", u"M-min", None))
+        self.btn_mr_max.setText(QCoreApplication.translate("Scientific", u"M-max", None))
 #if QT_CONFIG(tooltip)
         self.btn_mr_sum.setToolTip(QCoreApplication.translate("Scientific", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
@@ -1397,15 +1449,15 @@ class Ui_Scientific(object):
 "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">returns the function sum with all the values in memory</p></body></html>", None))
 #endif // QT_CONFIG(tooltip)
-        self.btn_mr_sum.setText(QCoreApplication.translate("Scientific", u"MSum", None))
+        self.btn_mr_sum.setText(QCoreApplication.translate("Scientific", u"M-sum", None))
 #if QT_CONFIG(tooltip)
-        self.btn_mds.setToolTip(QCoreApplication.translate("Scientific", u"Delete from memory the selected values", None))
+        self.btn_mr_prod.setToolTip(QCoreApplication.translate("Scientific", u"<html><head/><body><p><span style=\" font-family:'Consolas','Menlo','courier new','monospace'; font-size:8pt; color:#000000; background-color:#ffffff;\">Returns the function prod with all the values in memory</span></p></body></html>", None))
 #endif // QT_CONFIG(tooltip)
-        self.btn_mds.setText(QCoreApplication.translate("Scientific", u"MDS", None))
-#if QT_CONFIG(tooltip)
-        self.btn_showFun2.setToolTip(QCoreApplication.translate("Scientific", u"<html><head/><body><p>Hide the memory history</p></body></html>", None))
-#endif // QT_CONFIG(tooltip)
-        self.btn_showFun2.setText("")
+        self.btn_mr_prod.setText(QCoreApplication.translate("Scientific", u"M-prod", None))
+        self.btn_mr_mean.setText(QCoreApplication.translate("Scientific", u"M-mean", None))
+        self.btn_mr_median.setText(QCoreApplication.translate("Scientific", u"M-median", None))
+        self.btn_mr_mode.setText(QCoreApplication.translate("Scientific", u"M-mode", None))
+        self.btn_mr_clear.setText(QCoreApplication.translate("Scientific", u"M-clear", None))
         self.menuFile.setTitle(QCoreApplication.translate("Scientific", u"File", None))
         self.menuHelp.setTitle(QCoreApplication.translate("Scientific", u"Help", None))
         self.toolBar.setWindowTitle(QCoreApplication.translate("Scientific", u"toolBar", None))
